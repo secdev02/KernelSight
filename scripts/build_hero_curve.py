@@ -34,10 +34,10 @@ PUSH = re.compile(
 # The five configurations the homepage curve reports.
 CONFIGS = [
     ("Windows 10 2004", dict(build=19041, hlat=False, kcet=False, hvci=False, admin=True, prims=True)),
-    ("11 22H2, kCET", dict(build=22621, hlat=False, kcet=True, hvci=True, admin=True, prims=True)),
-    ("11 24H2, pre-11th gen", dict(build=26100, hlat=False, kcet=True, hvci=True, admin=True, prims=True)),
-    ("11 24H2, HLAT", dict(build=26100, hlat=True, kcet=True, hvci=True, admin=True, prims=True)),
-    ("11 25H2, HLAT", dict(build=26200, hlat=True, kcet=True, hvci=True, admin=True, prims=True)),
+    ("Windows 11 22H2 + kCET", dict(build=22621, hlat=False, kcet=True, hvci=True, admin=True, prims=True)),
+    ("Windows 11 24H2, older CPU", dict(build=26100, hlat=False, kcet=True, hvci=True, admin=True, prims=True)),
+    ("Windows 11 24H2 + HLAT", dict(build=26100, hlat=True, kcet=True, hvci=True, admin=True, prims=True)),
+    ("Windows 11 25H2 + HLAT", dict(build=26200, hlat=True, kcet=True, hvci=True, admin=True, prims=True)),
 ]
 
 HARNESS = """
