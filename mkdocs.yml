@@ -140,6 +140,10 @@ nav:
         - Primitive Matrix: primitives/exploitation/primitive-matrix.md
     - Case Studies:
       - case-studies/index.md
+    - Notable Exploits:
+      - notable-exploits/index.md
+      - Nightmare-Eclipse: notable-exploits/nightmare-eclipse.md
+      - Lazarus / FudModule: notable-exploits/lazarus-fudmodule.md
       - CLFS Deep-Dive: case-studies/clfs-deep-dive.md
       - AFD Deep-Dive: case-studies/afd-deep-dive.md
       - Win32k Deep-Dive: case-studies/win32k-deep-dive.md
