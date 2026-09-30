@@ -142,6 +142,8 @@ KernelSight/
 
 Contributions welcome, whether adding a case study, documenting a new technique, or improving existing entries.
 
+The [MSRC watch](.github/workflows/watch-msrc.yml) scans every Patch Tuesday and opens a monthly triage issue listing each new kernel-driver CVE the corpus does not yet cover, exploited-in-the-wild first. Pick an unchecked entry from the latest one as a ready-made first contribution.
+
 1. Use the templates in `templates/` as a starting point
 2. Follow the schema in `index/techniques.yaml`
 3. Cross-reference CVEs to techniques, techniques to mitigations

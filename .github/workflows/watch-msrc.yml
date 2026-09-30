@@ -1,0 +1,44 @@
+name: MSRC watch
+
+# Wednesdays at 13:00 UTC. Patch Tuesday is the second Tuesday, so the first
+# Wednesday run after it picks the release up while the 10-day window in
+# watch_msrc.py keeps the next run from duplicating it. The workflow also
+# self-disables after 60 days of repository inactivity; a manual
+# workflow_dispatch re-enables it.
+on:
+  schedule:
+    - cron: "0 13 * * 3"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyyaml
+
+      - name: Scan recent MSRC releases
+        run: python scripts/watch_msrc.py --days 10 --out /tmp/triage.md --title-out /tmp/title.txt
+
+      - name: Open the monthly triage issue when there is anything to triage
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          [ -s /tmp/triage.md ] || { echo "nothing to triage"; exit 0; }
+          TITLE=$(cat /tmp/title.txt)
+          gh label create "msrc-triage" --color 5319e7 --description "Monthly kernel-driver CVE triage" 2>/dev/null || true
+          EXISTS=$(gh issue list --state all --search "in:title $TITLE" --json title --jq '.[].title' | grep -Fx "$TITLE" || true)
+          if [ -n "$EXISTS" ]; then
+            echo "issue already exists: $TITLE"
+          else
+            gh issue create --title "$TITLE" --body-file /tmp/triage.md --label "msrc-triage"
+          fi
