@@ -38,3 +38,5 @@ collector/state/
 .playwright-mcp/
 excalidraw.log
 docs/assets/bypasses.json
+docs/assets/dashboard-data.json
+docs/assets/hero-curve.json
