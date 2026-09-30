@@ -66,7 +66,18 @@ def is_cosmetic(sha, path):
             removed.append(line[1:])
     if not added and not removed:
         return False
-    return normalise("\n".join(added)) == normalise("\n".join(removed))
+    if normalise("\n".join(added)) == normalise("\n".join(removed)):
+        return True
+    # Generated metadata is not content. Bulk operations like apply_tags.py
+    # rewrite frontmatter across every case study at once; without this
+    # clause a tagging pass resets 157 pages to today and hides that their
+    # substance is months old, which is exactly the failure this tool
+    # exists to prevent. Only lines a frontmatter block can contain
+    # qualify: fences, keys, and list items.
+    frontmatter_line = re.compile(r"^(---|[a-zA-Z_]+:|\s+- .*)$")
+    if all(frontmatter_line.match(l) for l in added + removed):
+        return True
+    return False
 
 
 def url_for(path):
