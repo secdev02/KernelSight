@@ -3,6 +3,16 @@
 {% block extrahead %}
 <meta name="description" content="What kernel access buys you on Windows: how it is obtained, and which kernel-layer and user-layer defenses it does and does not defeat.">
 <meta property="og:title" content="KernelSight, the Windows kernel bypass reference">
+  <link rel="alternate" type="application/atom+xml" title="KernelSight" href="{{ config.site_url }}feed.xml">
+  <script>
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      var t = document.querySelector('label[for="__search"]');
+      if (t) t.click();
+    }
+  });
+  </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -28,8 +38,11 @@
 }
 
 .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-.md-header, .md-tabs, .md-sidebar, .md-footer, .md-search,
-.md-header__inner, .md-header-nav { display: none !important; }
+.md-tabs, .md-sidebar, .md-footer, .md-header__inner, .md-header-nav { display: none !important; }
+/* Material's header must exist for its JS, and its search modal must paint.
+   Collapse the header but keep the modal reachable, exactly like main.html. */
+.md-header { position: absolute; top: 0; left: 0; width: 100%; height: 0; visibility: hidden; pointer-events: none; }
+.md-header .md-search { visibility: visible; pointer-events: auto; }
 .md-main__inner { margin: 0 !important; padding: 0 !important; max-width: none !important; }
 .md-content { margin: 0 !important; padding: 0 !important; max-width: none !important; }
 .md-content__inner { margin: 0 !important; padding: 0 !important; max-width: none !important; }
@@ -95,6 +108,9 @@ body, html { background: #10131a !important; overflow-x: hidden; }
       <a href="{{ config.site_url }}bypasses/" style="text-decoration:none;color:#adc6ff;font-family:'Inter';font-size:0.85rem;border-bottom:1px solid rgba(173,198,255,0.35);padding-bottom:1px">
         or jump to the bypass matrix
       </a>
+      <label for="__search" style="cursor:pointer;color:#9ca3af;font-family:'Inter';font-size:0.85rem;border:1px solid rgba(69,70,76,0.35);padding:0.62rem 1.05rem;border-radius:0.5rem;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(173,198,255,0.4)'" onmouseout="this.style.borderColor='rgba(69,70,76,0.35)'">
+        Search &middot; Ctrl K
+      </label>
     </div>
   </div>
 </section>

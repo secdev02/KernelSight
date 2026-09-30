@@ -1,3 +1,6 @@
+---
+tags:
+---
 # CLFS Attack Surface Deep-Dive
 
 If you wanted to design a kernel attack surface optimized for exploitation, you might come up with something close to the Common Log File System. A complex binary file format parsed in ring 0, where every on-disk offset becomes a pointer arithmetic operation, where any unprivileged user can create the files, and where Microsoft patches each individual offset validation one at a time, leaving the underlying architecture intact. Between 2018 and 2025, CLFS accumulated over 30 CVEs. At least six were exploited in the wild, several by ransomware groups running campaigns at scale. The Nokoyawa operators alone burned through two distinct CLFS zero-days in a single year.

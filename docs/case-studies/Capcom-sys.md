@@ -1,3 +1,9 @@
+---
+tags:
+  - Capcom.sys
+  - logic-bugs
+  - ITW
+---
 # Capcom.sys
 
 > Capcom anti-cheat driver, intentional ring-0 code execution with SMEP bypass

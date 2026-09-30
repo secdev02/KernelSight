@@ -1,3 +1,8 @@
+---
+tags:
+  - user-layer
+  - VTL1
+---
 # Credential Guard
 
 Credential Guard is the page the rest of this section keeps pointing at. The homepage's worked

@@ -13,6 +13,7 @@ extra:
 
 plugins:
   - search
+  - tags
   # Social cards need cairo and Pillow. Those have never been installed on
   # the deploy runner, so cards were silently skipped in production while
   # emitting one warning per page. Harmless until the build went strict.
@@ -37,6 +38,7 @@ theme:
     - navigation.indexes
     - navigation.top
     - navigation.tracking
+    - navigation.footer
     - toc.follow
     - search.highlight
     - search.suggest
@@ -358,5 +360,6 @@ nav:
       - LOLDrivers Deep Analysis: reference/loldrivers-analysis.md
       - KDU Provider Compatibility: reference/kdu-compatibility.md
       - Resources: reference/resources.md
+    - All tags: tags.md
     - Explore the corpus: explore.md
     - About: about.md

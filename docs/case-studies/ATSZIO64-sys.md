@@ -1,3 +1,9 @@
+---
+tags:
+  - ATSZIO64.sys
+  - arbitrary-rw-primitives
+  - ITW
+---
 # ATSZIO64.sys
 
 > ASUS system I/O driver, physical memory read/write via unrestricted MmMapIoSpace

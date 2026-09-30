@@ -233,6 +233,108 @@
   }
 }
 
+/* --- Footer: sitemap + resources, the docs-site standard --- */
+/* Material's footer keeps only the prev/next pager; the meta row is
+   superseded by the sitemap below it. */
+.md-footer {
+  background: var(--ks-bg);
+  color: var(--ks-fg-muted);
+  border-top: 1px solid var(--ks-border);
+  margin-top: 4rem;
+}
+
+.md-footer__inner {
+  border-bottom: none;
+}
+
+.md-footer-meta {
+  display: none;
+}
+
+.md-footer__link {
+  color: var(--ks-fg-muted);
+  border-color: var(--ks-border);
+}
+
+.md-footer__link:hover {
+  color: var(--ks-cobalt);
+}
+
+.md-footer__direction {
+  color: var(--ks-fg-light);
+}
+
+.ks-footer {
+  border-top: none;
+  background: var(--ks-bg);
+  margin-top: 0;
+  padding: 2rem 1.5rem 1.5rem;
+}
+
+.ks-footer__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.75rem;
+}
+
+.ks-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.ks-footer__head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ks-fg-muted);
+  margin-bottom: 0.35rem;
+}
+
+.ks-footer__col a {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: var(--ks-fg-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.ks-footer__col a:hover {
+  color: var(--ks-cobalt);
+}
+
+.ks-footer__base {
+  max-width: 1000px;
+  margin: 2rem auto 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--ks-border-subtle);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--ks-fg-light);
+  letter-spacing: 0.04em;
+}
+
+/* Keyboard hint beside the search icon, desktop only */
+.ks-supernav__kbd {
+  display: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.56rem;
+  color: var(--ks-fg-muted);
+  border: 1px solid var(--ks-border);
+  border-radius: 6px;
+  padding: 0.1rem 0.32rem;
+  letter-spacing: 0.06em;
+  margin-left: -0.35rem;
+}
+
+@media (min-width: 900px) {
+  .ks-supernav__kbd { display: inline-block; }
+}
+
 /* Adjust sidebar top position (no Material header, just super-nav) */
 .md-sidebar {
   top: 3.4rem !important;

@@ -1,5 +1,8 @@
 ---
 description: "BYOVD (Bring Your Own Vulnerable Driver) attack technique -- how attackers use signed drivers like Dell DBUtil, RTCore64, Capcom.sys, and Paragon BioNTdrv to gain kernel access. 41 BYOVD drivers analysed."
+
+tags:
+  - BYOVD
 ---
 
 # Bring Your Own Vulnerable Driver (BYOVD)

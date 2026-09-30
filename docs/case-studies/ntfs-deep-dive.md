@@ -1,3 +1,6 @@
+---
+tags:
+---
 # NTFS Attack Surface Deep-Dive
 
 The NTFS driver is a growing kernel attack surface with 7 CVEs in the KernelSight corpus, including 3 exploited in the wild via crafted VHD images. This page tells the story of how a file system became a weapon.

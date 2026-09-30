@@ -1,3 +1,9 @@
+---
+tags:
+  - viragt64.sys
+  - logic-bugs
+  - ITW
+---
 # viragt64.sys
 
 > TG Soft VirIT antivirus -- the ransomware industry's favorite process termination driver

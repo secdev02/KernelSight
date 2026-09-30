@@ -1,3 +1,7 @@
+---
+tags:
+  - user-layer
+---
 # Protected Process Light
 
 Protected Process Light is an access-control decision made in the kernel about kernel objects.

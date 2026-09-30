@@ -1,5 +1,8 @@
 ---
 description: "Smart App Control, the Windows 11 reputation-based application control feature: how it is enforced, why it is usually not enabled, and what a kernel primitive does to it."
+
+tags:
+  - user-layer
 ---
 
 # Smart App Control

@@ -1,3 +1,7 @@
+---
+tags:
+  - user-layer
+---
 # LSA Protection
 
 LSA Protection is [Protected Process Light](protected-process.md) applied to one process that

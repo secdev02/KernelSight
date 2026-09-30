@@ -1,3 +1,6 @@
+---
+tags:
+---
 # AFD Attack Surface Deep-Dive
 
 No single Windows kernel driver has produced more privilege escalation vulnerabilities than `afd.sys`. With 14 CVEs in the KernelSight corpus and four confirmed in-the-wild exploits, two of them attributed to the Lazarus Group, the Ancillary Function Driver for WinSock is the most consistently exploited networking component in the Windows kernel. Its bugs span nearly every vulnerability class: use-after-free, heap overflow, missing validation, integer overflow, and race conditions. What makes AFD remarkable is not any single bug, but the architectural reality that keeps producing them.

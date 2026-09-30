@@ -1,3 +1,6 @@
+---
+tags:
+---
 # Win32k Attack Surface Deep-Dive
 
 The Win32k subsystem is one of the oldest and most exploited Windows kernel attack surfaces. With 12 CVEs in the KernelSight corpus, 3 exploited in the wild, and a vulnerability history stretching back to Windows XP, it is the textbook case of how legacy architecture creates persistent security debt.

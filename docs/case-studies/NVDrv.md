@@ -1,3 +1,8 @@
+---
+tags:
+  - nvlddmkm.sys
+  - arbitrary-rw-primitives
+---
 # NVDrv
 
 > NVIDIA display driver -- the BYOVD target that cannot be blocklisted

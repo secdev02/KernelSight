@@ -1,5 +1,9 @@
 ---
 description: "App Control for Business, formerly WDAC: kernel-enforced application control. Why the signed-policy configuration is the only one that resists a local administrator, and what a kernel primitive does to the rest."
+
+tags:
+  - user-layer
+  - WDAC
 ---
 
 # App Control for Business

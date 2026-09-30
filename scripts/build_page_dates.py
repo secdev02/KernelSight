@@ -109,7 +109,7 @@ def title_for(path):
     return None
 
 
-def recent_feed(mapping, limit=10):
+def recent_feed(mapping, limit=20):
     """The most recently substantively-changed articles, newest first.
 
     The homepage renders this as the site's feed: what a returning reader

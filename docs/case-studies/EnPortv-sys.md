@@ -1,3 +1,9 @@
+---
+tags:
+  - EnPortv.sys
+  - logic-bugs
+  - ITW
+---
 # EnPortv.sys
 
 > Guidance Software EnCase forensic driver -- a 16-year-old signed driver with a revoked certificate that Windows still loads, weaponized as a pre-ransomware EDR killer

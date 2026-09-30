@@ -47,6 +47,7 @@ jobs:
           python scripts/build_hero_curve.py
           python scripts/build_bypass_export.py
           python scripts/build_page_dates.py
+          python scripts/build_feed.py
 
       - name: Tests
         run: python -m pytest tests/ -q

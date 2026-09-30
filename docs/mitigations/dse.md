@@ -1,3 +1,8 @@
+---
+tags:
+  - kernel-layer
+  - BYOVD
+---
 # Driver Signature Enforcement
 
 Driver Signature Enforcement decides which drivers may load. Its bypass inventory is the shortest

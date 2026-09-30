@@ -1,3 +1,9 @@
+---
+tags:
+  - Truesight.sys
+  - logic-bugs
+  - ITW
+---
 # Truesight.sys
 
 > Adlice RogueKiller anti-rootkit -- the security tool whose own protection bypass capabilities were turned against the security industry

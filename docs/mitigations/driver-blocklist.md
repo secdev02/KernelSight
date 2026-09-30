@@ -1,3 +1,8 @@
+---
+tags:
+  - kernel-layer
+  - BYOVD
+---
 # Vulnerable Driver Blocklist
 
 The vulnerable driver blocklist is the layer that answers what [DSE](dse.md) cannot: among validly

@@ -1,3 +1,8 @@
+---
+tags:
+  - echo_driver.sys
+  - logic-bugs
+---
 # echo_driver.sys
 
 > Echo anti-cheat driver -- a legitimate callback management tool repurposed to blind EDR products

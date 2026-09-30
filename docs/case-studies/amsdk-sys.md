@@ -1,3 +1,9 @@
+---
+tags:
+  - amsdk.sys
+  - logic-bugs
+  - ITW
+---
 # amsdk.sys
 
 > WatchDog Development security driver, process termination abused by Silver Fox APT

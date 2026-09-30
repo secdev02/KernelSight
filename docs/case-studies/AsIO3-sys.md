@@ -1,3 +1,9 @@
+---
+tags:
+  - AsIO3.sys
+  - arbitrary-rw-primitives
+  - ITW
+---
 # AsIO3.sys
 
 > ASRock/ASUS hardware access driver that exposes physical memory reads/writes, MSR access, and an `ObfDereferenceObject` decrement primitive
