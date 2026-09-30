@@ -74,7 +74,7 @@ def test_recent_feed_is_sorted_newest_first_and_complete():
     dates = [e["date"] for e in feed]
     assert dates == sorted(dates, reverse=True)
     for entry in feed:
-        assert entry["url"] and entry["url"] != ""
+        assert entry["url"] and entry["url"] != "" and entry["url"] != "tags/"
         assert entry["title"] and not entry["title"].startswith("[")
         assert entry["section"]
         assert entry["date"] in d["pages"].values()

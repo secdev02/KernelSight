@@ -74,7 +74,7 @@ def is_cosmetic(sha, path):
     # substance is months old, which is exactly the failure this tool
     # exists to prevent. Only lines a frontmatter block can contain
     # qualify: fences, keys, and list items.
-    frontmatter_line = re.compile(r"^(---|[a-zA-Z_]+:|\s+- .*)$")
+    frontmatter_line = re.compile(r"^(---|[a-zA-Z_]+:|\s+- .*|\s*)$")
     if all(frontmatter_line.match(l) for l in added + removed):
         return True
     return False
@@ -135,7 +135,9 @@ def recent_feed(mapping, limit=20):
             continue
         url = url_for(path)
         when = mapping.get(url)
-        if not url or not when:
+        # tags.md is generated navigation, not an article; a feed entry for
+        # the tag index is noise.
+        if not url or not when or url == "tags/":
             continue
         title = title_for(path)
         if not title:
