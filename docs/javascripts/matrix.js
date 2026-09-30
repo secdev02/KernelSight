@@ -26,8 +26,9 @@
     var view = { layer: 'all', showClosed: true };
 
     function collect() {
-      var out = [];
-      (window.__ksnav || []).forEach(function (cfg) {
+      var out = [], q = window.__ksnav;
+      if (!q || typeof q.forEach !== 'function') return out;
+      q.forEach(function (cfg) {
         if (typeof cfg.fromPlatform !== 'function') return;
         (cfg.techniques || []).forEach(function (t) {
           out.push({ t: t, cfg: cfg, defense: cfg.title || 'Unknown defense' });

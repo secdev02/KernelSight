@@ -69,6 +69,7 @@ did not.
 
 ## The matrix
 
+<script src="../assets/bypass-configs.js"></script>
 <div id="ks-matrix"></div>
 
 Basis tiers: `tested` means reproduced in lab. `cited` means a resolving public source.

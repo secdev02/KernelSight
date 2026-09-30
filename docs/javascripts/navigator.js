@@ -103,8 +103,11 @@
   function drain() {
     var q = window.__ksnav || [];
     q.forEach(mount);
-    // Replace the queue so any later push mounts immediately.
-    window.__ksnav = { push: mount };
+    /* Keep the queue an array: the aggregate matrix on the bypasses page
+     * reads it with forEach, so replacing it with a push-only stub breaks
+     * the matrix. Hook push instead; late configs still mount at once. */
+    q.push = function (cfg) { mount(cfg); };
+    window.__ksnav = q;
   }
 
   if (document.readyState === 'loading') {

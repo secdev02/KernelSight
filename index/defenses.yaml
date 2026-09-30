@@ -80,8 +80,8 @@ defenses:
     layer: kernel
     enforced_by: kernel
     protects: "Which drivers may load"
-    page: null
-    status: planned
+    page: docs/mitigations/dse.md
+    status: current
   - id: hlat
     name: "HLAT / HVPT"
     layer: kernel
@@ -115,8 +115,8 @@ defenses:
     layer: kernel
     enforced_by: kernel
     protects: "Which signed drivers may load despite valid signatures"
-    page: null
-    status: planned
+    page: docs/mitigations/driver-blocklist.md
+    status: current
   - id: secure-kernel
     name: "Secure Kernel / VTL1"
     layer: kernel
@@ -152,15 +152,15 @@ defenses:
     layer: user
     enforced_by: kernel
     protects: "Credential material held in the LSA process"
-    page: null
-    status: planned
+    page: docs/mitigations/lsa-protection.md
+    status: current
   - id: credential-guard
     name: "Credential Guard"
     layer: user
     enforced_by: hypervisor
     protects: "Credential material isolated in VTL1"
-    page: null
-    status: planned
+    page: docs/mitigations/credential-guard.md
+    status: current
   - id: etw-ti
     name: "ETW Threat Intelligence"
     layer: user

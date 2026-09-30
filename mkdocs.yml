@@ -328,8 +328,12 @@ nav:
       - ACG: mitigations/acg.md
       - KASLR: mitigations/kaslr.md
       - KASLR Bypasses: mitigations/kaslr-bypasses.md
+      - Driver Signature Enforcement: mitigations/dse.md
+      - Vulnerable Driver Blocklist: mitigations/driver-blocklist.md
     - User layer:
       - Protected Process Light: mitigations/protected-process.md
+      - LSA Protection: mitigations/lsa-protection.md
+      - Credential Guard: mitigations/credential-guard.md
       - App Control for Business: mitigations/app-control-for-business.md
       - Smart App Control: mitigations/smart-app-control.md
   - Reference:

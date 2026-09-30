@@ -99,7 +99,7 @@ a maintained inventory of what a kernel primitive does and does not defeat again
 <ol class="ks-pipeline-list" markdown>
 <li markdown>
 <strong><a href="mitigations/">The defense roster</a></strong>
-<p>30 defenses, split by the layer of the asset protected: 19 kernel layer, 11 user layer. 13 have a reviewed bypass inventory today; the rest are tracked as planned, so coverage is a number that moves rather than a claim.</p>
+<p>30 defenses, split by the layer of the asset protected: 19 kernel layer, 11 user layer. 17 have a reviewed bypass inventory today; the rest are tracked as planned, so coverage is a number that moves rather than a claim.</p>
 </li>
 <li markdown>
 <strong><a href="bypasses/">The bypass matrix</a></strong>
