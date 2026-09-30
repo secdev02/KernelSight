@@ -79,6 +79,67 @@ def url_for(path):
     return rel[:-3] + "/"
 
 
+# Section labels use the spine vocabulary, so the feed on the homepage names
+# each half the same way the navigation does.
+SECTION_LABELS = {
+    "driver-types": "Drivers", "attack-surfaces": "Surfaces",
+    "vuln-classes": "Bugs", "primitives": "Primitives",
+    "case-studies": "Case studies", "notable-exploits": "Exploits",
+    "mitigations": "Defenses", "bypasses": "Matrix",
+    "guides": "Guides", "tooling": "Tooling", "reference": "Reference",
+    "start-here": "Start here", "overview": "Overview",
+}
+
+
+def title_for(path):
+    """First markdown H1, stripped of markup. None when the page has none."""
+    try:
+        text = (DOCS / path[len("docs/"):]).read_text(encoding="utf-8")
+    except OSError:
+        return None
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("# "):
+            title = stripped[2:]
+            title = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", title)
+            title = title.replace("**", "").replace("`", "").strip()
+            return title or None
+        if stripped.startswith("---") and stripped == "---":
+            continue
+    return None
+
+
+def recent_feed(mapping, limit=10):
+    """The most recently substantively-changed articles, newest first.
+
+    The homepage renders this as the site's feed: what a returning reader
+    has not read yet. Section index pages are excluded; a housekeeping pass
+    can touch every index at once, and a feed of indexes is a changelog,
+    not reading material. Iterating the tracked files rather than the URL
+    keys keeps top-level pages like overview.md from looking like indexes.
+    """
+    feed = []
+    for path in git("ls-files", "docs/").splitlines():
+        if not path.endswith(".md") or path.endswith("index.md"):
+            continue
+        url = url_for(path)
+        when = mapping.get(url)
+        if not url or not when:
+            continue
+        title = title_for(path)
+        if not title:
+            continue
+        section = url.split("/")[0]
+        feed.append({
+            "url": url,
+            "title": title,
+            "section": SECTION_LABELS.get(section, "Reference"),
+            "date": when,
+        })
+    feed.sort(key=lambda e: (e["date"], e["url"]), reverse=True)
+    return feed[:limit]
+
+
 def substantive_date(path):
     history = commits_for(path)
     for sha, when in history:
@@ -118,6 +179,7 @@ def main():
         "pages_total": len(mapping),
         "pages_over_six_months_old": stale,
         "pages": mapping,
+        "recent": recent_feed(mapping),
     }, indent=0, sort_keys=True) + "\n", encoding="utf-8")
 
     print(f"page dates: {len(mapping)} pages, newest {max(mapping.values())}, "

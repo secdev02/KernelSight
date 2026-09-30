@@ -63,3 +63,18 @@ def test_most_pages_still_show_their_march_date():
     d = data()
     march = sum(1 for v in d["pages"].values() if v.startswith("2026-03"))
     assert march > 150, f"only {march} pages still carry a March date; a sweep may have masked staleness"
+
+
+def test_recent_feed_is_sorted_newest_first_and_complete():
+    """The homepage renders this as the site's feed, so it must be usable:
+    sorted, dated, titled, and never containing the homepage itself."""
+    d = data()
+    feed = d["recent"]
+    assert len(feed) >= 6
+    dates = [e["date"] for e in feed]
+    assert dates == sorted(dates, reverse=True)
+    for entry in feed:
+        assert entry["url"] and entry["url"] != ""
+        assert entry["title"] and not entry["title"].startswith("[")
+        assert entry["section"]
+        assert entry["date"] in d["pages"].values()
