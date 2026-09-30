@@ -1,0 +1,68 @@
+"""The machine-readable bypass export must stay identical to the site.
+
+build_bypass_export.py reads the same __ksnav configs the navigator renders,
+so these tests hold it to that: same technique set as check_verdicts enforces,
+every field present, every roster cross-reference resolvable.
+"""
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "docs" / "assets" / "bypasses.json"
+
+sys.path.insert(0, str(ROOT / "scripts"))
+
+
+def build():
+    subprocess.run([sys.executable, "scripts/build_bypass_export.py"], cwd=ROOT, check=True)
+    return json.loads(OUT.read_text(encoding="utf-8"))
+
+
+def test_export_carries_exactly_the_enforced_techniques():
+    from check_verdicts import scan
+    data = build()
+    exported = {(d["page"].split("/")[-1], t["name"]) for d in data["defenses"] for t in d["techniques"]}
+    enforced = {(r["file"], r["name"]) for r in scan()}
+    assert exported == enforced, f"export and verdict check disagree: {exported ^ enforced}"
+
+
+def test_every_technique_carries_the_five_fields():
+    data = build()
+    for defense in data["defenses"]:
+        for t in defense["techniques"]:
+            assert t["name"] and t["cat"], (defense["page"], t)
+            assert t["layer"] in {"kernel", "user"}, (defense["page"], t)
+            assert t["basis"] in {"tested", "cited", "inferred"}, (defense["page"], t)
+            assert t["asOf"] and len(t["asOf"]) == 10, (defense["page"], t)
+
+
+def test_every_defense_page_exists_and_every_url_is_derived_from_it():
+    data = build()
+    for defense in data["defenses"]:
+        page = ROOT / defense["page"]
+        assert page.exists(), defense["page"]
+        assert defense["url"] == defense["page"][
+            len("docs/"):-len(".md")] + "/", defense["page"]
+
+
+def test_roster_ids_resolve_against_the_roster_file():
+    from check_roster import load_roster
+    ids = {d["id"] for d in load_roster()}
+    roster_pages = {d["page"] for d in load_roster() if d.get("page")}
+    data = build()
+    for defense in data["defenses"]:
+        for rid in defense["roster_ids"]:
+            assert rid in ids, f"{defense['page']}: unknown roster id {rid}"
+        # A page the roster names must surface its roster id here too.
+        if defense["page"] in roster_pages:
+            assert defense["roster_ids"], f"{defense['page']}: roster names this page but export carries no id"
+
+
+def test_counts_block_matches_the_content():
+    data = build()
+    defenses = len(data["defenses"])
+    techniques = sum(len(d["techniques"]) for d in data["defenses"])
+    assert data["counts"] == {"defenses": defenses, "techniques": techniques}
+    assert defenses >= 7 and techniques >= 40

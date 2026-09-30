@@ -37,3 +37,4 @@ collector/state/
 # Working artifacts
 .playwright-mcp/
 excalidraw.log
+docs/assets/bypasses.json

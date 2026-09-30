@@ -78,3 +78,7 @@ did not.
 Basis tiers: `tested` means reproduced in lab. `cited` means a resolving public source.
 `inferred` means reasoned from mechanism and not yet confirmed. An inferred verdict is a
 research lead, not a finding.
+
+Machine-readable copy of every registered verdict: [bypasses.json](../assets/bypasses.json),
+regenerated from these pages on every deploy. Field meanings are on the
+[defense roster](../mitigations/index.md).

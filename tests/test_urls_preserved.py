@@ -17,8 +17,12 @@ _cache = {}
 
 def built_pages():
     if "pages" not in _cache:
-        subprocess.run([sys.executable, "scripts/build_dashboard_data.py"], cwd=ROOT,
-                       check=True, stdout=subprocess.DEVNULL)
+        for generator in (
+            "scripts/build_dashboard_data.py",
+            "scripts/build_bypass_export.py",
+        ):
+            subprocess.run([sys.executable, generator], cwd=ROOT,
+                           check=True, stdout=subprocess.DEVNULL)
         # Capture rather than discard: a strict-mode failure here is the whole
         # point of the test, so the warning that caused it must reach the report.
         result = subprocess.run(["mkdocs", "build", "--strict"], cwd=ROOT,

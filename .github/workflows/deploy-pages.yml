@@ -41,10 +41,11 @@ jobs:
           python scripts/check_roster.py
           python scripts/check_verdicts.py
 
-      - name: Generate dashboard data and hero curve
+      - name: Generate data files
         run: |
           python scripts/build_dashboard_data.py
           python scripts/build_hero_curve.py
+          python scripts/build_bypass_export.py
           python scripts/build_page_dates.py
 
       - name: Tests
