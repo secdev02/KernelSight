@@ -97,9 +97,13 @@ Visit **[splintersfury.github.io/KernelSight](https://splintersfury.github.io/Ke
 ```bash
 git clone https://github.com/splintersfury/KernelSight.git
 cd KernelSight
-pip install mkdocs-material pyyaml
-python scripts/build_dashboard_data.py   # generate dashboard data
+pip install mkdocs-material pyyaml pytest
+python scripts/build_dashboard_data.py    # dashboard data
+python scripts/build_hero_curve.py        # homepage hardening curve
+python scripts/build_bypass_export.py     # machine-readable bypass registry
+python scripts/build_page_dates.py        # per-page dates from git history
 mkdocs serve                              # open http://localhost:8000
+python -m pytest tests/ -q                # corpus consistency checks
 ```
 
 ### Project Structure
