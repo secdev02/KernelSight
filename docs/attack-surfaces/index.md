@@ -4,10 +4,6 @@ description: "9 Windows kernel attack surfaces: IOCTL handlers, filesystem IRPs,
 
 # Attack Surfaces
 
-<div class="ks-pipeline-pos">
-  <span class="ks-half">Getting in</span> Driver Type &rarr; <span class="ks-active">Attack Surface</span> &rarr; Vuln Class &rarr; Primitive &rarr; Case Study &rarr; <span class="ks-hinge">kernel access</span> &rarr; <a href="../bypasses/">What stops them</a>
-</div>
-
 A kernel exploit begins with a question that sounds simple but carries enormous consequences: how does user-mode code reach the vulnerable driver? The answer determines everything that follows. It dictates what data the attacker controls, how much of it they control, what validation (if any) sits between them and the bug, and whether the vulnerability is reachable from a sandbox, a low-integrity process, or even a remote machine with no authentication at all.
 
 Windows kernel drivers do not expose a single entry point. They expose many, and each one operates under different rules. An IOCTL handler receives structured input buffers through `DeviceIoControl` with attacker-controlled sizes. A filesystem minifilter parses reparse data buffers embedded in on-disk structures that might arrive on a USB stick. A network protocol driver reassembles fragmented IPv6 packets from the wire. An ALPC message carries multiple attribute types that trigger kernel object operations during deserialization. These are fundamentally different trust boundaries with fundamentally different bug patterns, and treating them as interchangeable leads to blind spots in both offense and defense.

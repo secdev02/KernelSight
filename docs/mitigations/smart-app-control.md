@@ -4,10 +4,6 @@ description: "Smart App Control, the Windows 11 reputation-based application con
 
 # Smart App Control
 
-<div class="ks-pipeline-pos">
-  <a href="../driver-types/">Getting in</a> &rarr; <span class="ks-hinge">kernel access</span> &rarr; <span class="ks-half">What stops them</span> <span class="ks-active">User layer</span>
-</div>
-
 Smart App Control decides whether a user-mode program is allowed to run, based on Microsoft's
 reputation intelligence rather than on a policy an administrator wrote. It is the consumer-facing
 sibling of App Control for Business, and it rides the same kernel Code Integrity engine, so the

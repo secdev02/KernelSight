@@ -4,10 +4,6 @@ description: "12 categories of Windows kernel drivers: file system, network stac
 
 # Driver Types
 
-<div class="ks-pipeline-pos">
-  <span class="ks-half">Getting in</span> <span class="ks-active">Driver Type</span> &rarr; Attack Surface &rarr; Vuln Class &rarr; Primitive &rarr; Case Study &rarr; <span class="ks-hinge">kernel access</span> &rarr; <a href="../bypasses/">What stops them</a>
-</div>
-
 When you sit down to audit a Windows kernel driver, the first question is not "where is the bug?" but "what kind of driver is this?" The answer shapes everything that follows: which system calls reach it, what objects it manages, what memory it touches, and which exploitation primitives are realistic once you find a flaw. A heap overflow in a file system driver that parses on-disk metadata is a fundamentally different research target than a logic bug in a vendor utility driver that hands you physical memory read/write by design.
 
 KernelSight organizes kernel drivers into twelve categories based on their role in the Windows kernel architecture. Each category carries distinct IRP handling patterns, accessible attack surfaces, and historical vulnerability profiles. A driver's category predicts its bug classes with surprising consistency: CLFS drivers produce pool corruptions from metadata parsing, Win32k drivers produce use-after-free and type confusion from object lifecycle complexity, and vendor utility drivers produce arbitrary read/write from intentional design choices that were never meant to face adversarial callers. Understanding these patterns before you start reversing saves weeks of unfocused analysis.

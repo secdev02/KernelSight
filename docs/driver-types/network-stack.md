@@ -1,9 +1,5 @@
 # Network Stack Drivers
 
-<div class="ks-pipeline-pos">
-  <span class="ks-half">Getting in</span> <span class="ks-active">Driver Type</span> &rarr; Attack Surface &rarr; Vuln Class &rarr; Primitive &rarr; Case Study &rarr; <span class="ks-hinge">kernel access</span> &rarr; <a href="../bypasses/">What stops them</a>
-</div>
-
 In August 2024, Microsoft patched CVE-2024-38063, an integer underflow in tcpip.sys that allowed remote code execution via crafted IPv6 packets. No authentication, no user interaction, no local access required. The attacker sends packets; the kernel parses them; the machine is compromised. Network stack drivers are the only driver category in the KernelSight corpus that includes a genuinely remote, pre-authentication kernel attack surface, and that distinction makes them fundamentally different from every other category on this page.
 
 The Windows network stack spans three major components: the TCP/IP protocol driver (tcpip.sys) that processes packets from the wire, the Ancillary Function Driver (afd.sys) that implements the kernel side of Winsock for local socket operations, and the HTTP protocol stack (http.sys) that parses HTTP requests in kernel mode for IIS and HTTP.sys-based services. Each has a distinct threat model, but they share a common characteristic: they process untrusted data at high speed under tight performance constraints, and the code prioritizes throughput over defensive validation.

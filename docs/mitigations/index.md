@@ -4,10 +4,6 @@ description: "Windows kernel exploit mitigations -- SMEP, SMAP, kCFG, kCET, VBS,
 
 # Mitigations
 
-<div class="ks-pipeline-pos">
-  <a href="../driver-types/">Getting in</a> &rarr; <span class="ks-hinge">kernel access</span> &rarr; <span class="ks-half">What stops them</span> <span class="ks-active">Kernel layer</span> &middot; User layer
-</div>
-
 A kernel vulnerability gives an attacker a single corruption. Turning that corruption into SYSTEM requires a chain of steps: leaking addresses, shaping memory, constructing read/write primitives, and finally modifying a privilege token or security descriptor. Mitigations work by breaking links in that chain. No single defense stops exploitation on its own. Instead, they compose into a defense-in-depth stack where each layer forces the attacker to solve an additional problem, and each additional problem demands another primitive that may not be available from the original bug.
 
 This philosophy is visible in the corpus. CVE-2024-21338 (appid.sys) gave Lazarus Group a controlled kernel callback, but SMEP blocked the obvious step of jumping to user-mode shellcode, kCFG constrained which functions the callback could target, and KASLR meant the callback address had to be leaked first. The exploit worked because it found data-only paths around every layer. But remove any one of those constraints from the attacker's burden and the chain becomes simpler, faster, more reliable. Defense-in-depth does not prevent exploitation; it taxes it.

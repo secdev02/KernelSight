@@ -4,10 +4,6 @@ description: "10 Windows kernel vulnerability classes: buffer overflow, use-afte
 
 # Vulnerability Classes
 
-<div class="ks-pipeline-pos">
-  <span class="ks-half">Getting in</span> Driver Type &rarr; Attack Surface &rarr; <span class="ks-active">Vuln Class</span> &rarr; Primitive &rarr; Case Study &rarr; <span class="ks-hinge">kernel access</span> &rarr; <a href="../bypasses/">What stops them</a>
-</div>
-
 Every kernel exploit begins with a bug, and every bug belongs to a class. Once attacker-controlled input crosses the user/kernel boundary through an [attack surface](../attack-surfaces/), something has to go wrong inside the driver for that input to become dangerous. The vulnerability class describes *what* goes wrong: a size that is not checked, a pointer that outlives its object, a value that is read twice from memory the attacker controls. Understanding these classes is not just taxonomy for its own sake. It shapes how you read patches, where you focus during code review, and which AutoPiff rules you write.
 
 The landscape is not uniform. Some classes, like [buffer overflow](buffer-overflow.md) and [use-after-free](use-after-free.md), dominate the CVE record because they arise naturally from the way C code manages memory and because the Windows pool allocator makes them reliably exploitable. Others, like [logic bugs](logic-bugs.md), are rarer in CVE counts but disproportionately impactful when they appear, since they bypass memory safety mitigations entirely. [TOCTOU/double-fetch](toctou-double-fetch.md) bugs occupy a middle ground: they require a race to trigger, which sounds unreliable until you realize that modern multi-core processors make the race winnable on almost every attempt.

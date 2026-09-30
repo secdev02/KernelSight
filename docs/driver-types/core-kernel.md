@@ -1,9 +1,5 @@
 # Core Kernel
 
-<div class="ks-pipeline-pos">
-  <span class="ks-half">Getting in</span> <span class="ks-active">Driver Type</span> &rarr; Attack Surface &rarr; Vuln Class &rarr; Primitive &rarr; Case Study &rarr; <span class="ks-hinge">kernel access</span> &rarr; <a href="../bypasses/">What stops them</a>
-</div>
-
 Every Windows system runs the same kernel binary. A vulnerability in ntoskrnl.exe is not scoped to a specific driver, a specific hardware configuration, or a specific feature that might be disabled. It affects every Windows machine, period. This universality makes core kernel bugs the highest-impact category in the KernelSight corpus, and it explains why two of the four CVEs here were used at Pwn2Own or exploited in the wild by nation-state actors.
 
 The NT kernel executive (`ntoskrnl.exe`) is the foundation of the Windows operating system. It implements process and thread management, memory management, the Security Reference Monitor, the I/O Manager, the Object Manager, and the interface to Virtual Secure Mode (VBS/VTL). Unlike the specialized drivers in other categories, ntoskrnl is not focused on a single task. It is the glue that connects every other kernel component, and its attack surface spans hundreds of `Nt*`/`Zw*` system calls.

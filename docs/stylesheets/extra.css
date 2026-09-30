@@ -82,9 +82,24 @@
   border: none !important;
 }
 
-/* Hide Material's own header — super-nav replaces it */
-.md-header {
-  display: none !important;
+/* Material's header is kept in the DOM (its JS hard-fails without it, which
+   silently kills the palette and search) but made invisible: zero height,
+   hidden visibility, no pointer events. Overflow stays visible so the
+   search modal, which is absolutely positioned inside the header, can
+   still paint outside the collapsed box when opened. */
+.ks-material-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ks-material-header .md-search {
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* Super-nav hamburger (mobile sidebar toggle) */
@@ -100,11 +115,11 @@
   height: 1.25rem;
 }
 
-/* Super-nav actions (search + github) */
+/* Super-nav actions (search + palette + github) */
 .ks-supernav__actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.55rem;
   margin-left: auto;
 }
 
@@ -126,10 +141,102 @@
   height: 1.25rem;
 }
 
+/* Material hides search-toggle buttons on desktop (>= 60em) because its own
+   header renders an always-open search field there instead. Our header is
+   collapsed, so the supernav icon is the only search entry point and must
+   stay visible at every width. Specificity 0,3,0 beats the media rule. */
+.ks-supernav__actions .md-header__button[for="__search"] {
+  display: flex;
+}
+
+/* Material's palette toggle, hosted in the super-nav. Without this the
+   custom header hides the only light/dark switch on the site. */
+.ks-supernav__actions .md-header__option[data-md-component="palette"] {
+  display: flex;
+  align-items: center;
+}
+
+.ks-supernav__actions .md-header__option .md-header__button {
+  position: static;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.ks-supernav__actions .md-header__option .md-header__button:hover {
+  color: #adc6ff;
+}
+
+/* --- The spine: the model, visible on every page --- */
+.ks-spine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.4rem;
+  row-gap: 0.45rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--ks-fg-light);
+  padding-bottom: 0.9rem;
+  margin-bottom: 2.25rem;
+  border-bottom: 1px solid var(--ks-border-subtle);
+}
+
+.ks-spine__half {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.ks-spine__tag {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--ks-fg-muted);
+  padding-right: 0.45rem;
+  border-right: 1px solid var(--ks-border);
+}
+
+.ks-spine__half > a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.ks-spine__half > a:hover {
+  color: var(--ks-cobalt);
+  border-bottom-color: var(--ks-cobalt);
+}
+
+.ks-spine__on {
+  color: var(--ks-cobalt);
+  font-weight: 600;
+}
+
+.ks-spine__hinge {
+  color: var(--ks-cobalt);
+  padding: 0 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .ks-spine {
+    font-size: 0.62rem;
+    row-gap: 0.35rem;
+  }
+}
+
 /* Adjust sidebar top position (no Material header, just super-nav) */
 .md-sidebar {
-  top: 3rem !important;
-  height: calc(100vh - 3rem) !important;
+  top: 3.4rem !important;
+  height: calc(100vh - 3.4rem) !important;
 }
 
 /* Adjust tabs position */
@@ -230,14 +337,11 @@
   --md-footer-bg-color--dark: #0b0e14;
 }
 
-/* --- Section Color Overrides --- */
-[data-ks-section="drivers"]     { --ks-section: var(--ks-c-drivers); }
-[data-ks-section="surfaces"]    { --ks-section: var(--ks-c-surfaces); }
-[data-ks-section="vulns"]       { --ks-section: var(--ks-c-vulns); }
-[data-ks-section="primitives"]  { --ks-section: var(--ks-c-primitives); }
-[data-ks-section="cases"]       { --ks-section: var(--ks-c-cases); }
-[data-ks-section="mitigations"] { --ks-section: var(--ks-c-mitigations); }
-[data-ks-section="tooling"]     { --ks-section: var(--ks-c-tooling); }
+/* --- Section colors: figure palette only --- */
+/* The seven stage colors exist for the pipeline diagrams, where they
+   distinguish boxes. UI chrome (headings, tables, links, hover states)
+   uses the single cobalt accent; color in chrome means status, not
+   section. --ks-section therefore stays cobalt everywhere. */
 
 /* --- Typography --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
@@ -251,7 +355,7 @@ body,
 }
 
 .md-typeset {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   line-height: 1.75;
   color: var(--ks-fg);
   letter-spacing: -0.006em;
@@ -268,24 +372,25 @@ body,
 }
 
 .md-typeset h1 {
-  font-size: 1.65rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   border-bottom: none;
   padding-bottom: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
+  line-height: 1.2;
 }
 
 .md-typeset h2 {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   margin-top: 3.5rem;
   margin-bottom: 1rem;
   color: var(--ks-fg);
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--ks-section) 30%, var(--ks-border));
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--ks-cobalt) 16%, var(--ks-border));
 }
 
 .md-typeset h3 {
-  font-size: 0.92rem;
+  font-size: 1.02rem;
   margin-top: 2.5rem;
 }
 
@@ -296,19 +401,24 @@ body,
   color: var(--ks-fg-muted);
 }
 
+.md-typeset p {
+  margin-bottom: 1.05em;
+}
+
 /* --- Layout --- */
 .md-content {
-  max-width: 860px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 /* --- Tables --- */
 .md-typeset table:not([class]) {
-  border-radius: 0;
-  border: none;
+  border-radius: 10px;
+  border: 1px solid var(--ks-border);
   border-collapse: collapse;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   width: 100%;
+  overflow: hidden;
 }
 
 .md-typeset table:not([class]) thead {
@@ -322,60 +432,67 @@ body,
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--ks-fg-muted);
-  border-bottom: 2px solid var(--ks-section);
+  border-bottom: 1px solid var(--ks-border);
   border-top: none;
   border-left: none;
   border-right: none;
-  padding: 0.5rem 0.6rem;
+  padding: 0.55rem 0.65rem;
   text-align: left;
 }
 
 .md-typeset table:not([class]) td {
   border: none;
-  border-bottom: 1px solid var(--ks-border);
-  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--ks-border-subtle);
+  padding: 0.55rem 0.65rem;
 }
 
 .md-typeset table:not([class]) tbody tr:last-child td {
-  border-bottom: 1px solid var(--ks-border);
+  border-bottom: none;
 }
 
 .md-typeset table:not([class]) tr:hover {
-  background: color-mix(in srgb, var(--ks-section) 5%, transparent);
+  background: var(--ks-cobalt-wash);
 }
 
 /* --- Admonitions --- */
 .md-typeset .admonition,
 .md-typeset details {
-  border: none;
+  border: 1px solid var(--ks-border);
   border-left: 3px solid var(--ks-cobalt);
-  border-radius: 0;
+  border-radius: 10px;
   box-shadow: none;
   background: var(--ks-cobalt-wash);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.md-typeset .admonition .admonition-title,
+.md-typeset details summary {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
 }
 
 .md-typeset .admonition.danger,
 .md-typeset details.danger {
   border-left-color: var(--ks-badge-itw);
-  background: rgba(211, 47, 47, 0.04);
+  background: color-mix(in srgb, var(--ks-badge-itw) 6%, transparent);
 }
 
 .md-typeset .admonition.warning,
 .md-typeset details.warning {
   border-left-color: #e6a700;
-  background: rgba(230, 167, 0, 0.04);
+  background: color-mix(in srgb, #e6a700 6%, transparent);
 }
 
 /* --- Code blocks --- */
 .md-typeset pre > code {
-  border-radius: 2px;
+  border-radius: 10px;
   border: 1px solid var(--ks-border);
 }
 
 .md-typeset code {
   font-family: 'JetBrains Mono', monospace;
-  border-radius: 2px;
+  border-radius: 6px;
   font-size: 0.8em;
   background: var(--ks-cobalt-wash);
   color: var(--ks-cobalt);
@@ -400,8 +517,8 @@ body,
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.58rem;
   font-weight: 600;
-  padding: 0.08rem 0.4rem;
-  border-radius: 2px;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   vertical-align: middle;
@@ -481,23 +598,6 @@ body,
   opacity: 0.5;
 }
 
-/* --- Pipeline Position Indicator --- */
-.ks-pipeline-pos {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--ks-fg-light);
-  margin-bottom: 2rem;
-  padding: 0;
-  border: none;
-  background: transparent;
-  letter-spacing: 0.02em;
-}
-
-.ks-pipeline-pos .ks-active {
-  color: var(--ks-section);
-  font-weight: 600;
-}
-
 /* --- Pipeline Entry List (numbered definitions) --- */
 .ks-pipeline-list {
   counter-reset: pipeline;
@@ -573,22 +673,19 @@ body,
 .driver-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1px;
+  gap: 0.75rem;
   margin: 2rem 0;
-  border: 1px solid var(--ks-border);
 }
 
 .driver-card {
-  border: none;
-  border-radius: 0;
-  padding: 1.2rem;
-  transition: background 0.15s;
+  border: 1px solid var(--ks-border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  transition: background 0.15s, border-color 0.15s;
   text-decoration: none;
   color: inherit;
   display: block;
   background: var(--ks-bg-surface);
-  border-right: 1px solid var(--ks-border);
-  border-bottom: 1px solid var(--ks-border);
 }
 
 .driver-card:hover {
@@ -834,7 +931,7 @@ article:has(.ks-hero-title) > h1:first-child {
 /* --- Sidebar Navigation --- */
 .md-nav {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   letter-spacing: -0.006em;
 }
 
@@ -888,25 +985,18 @@ article:has(.ks-hero-title) > h1:first-child {
   background: #10131a;
 }
 
-/* --- Rounded elements (Stitch aesthetic) --- */
+/* --- Rounded elements --- */
+/* One radius scale for both schemes: 10px rows and panels, 16px cards,
+   999px pills. Set once above; these slate rules only carry the dark
+   surface colors. */
 [data-md-color-scheme="slate"] .md-typeset .admonition,
 [data-md-color-scheme="slate"] .md-typeset details {
-  border-radius: 0.75rem;
-  border-left: 3px solid var(--ks-cobalt);
   background: rgba(28, 32, 38, 0.7);
   backdrop-filter: blur(12px);
 }
 
 [data-md-color-scheme="slate"] .md-typeset pre > code {
-  border-radius: 0.75rem;
-  border: 1px solid rgba(69, 70, 76, 0.15);
   background: #0b0e14;
-}
-
-[data-md-color-scheme="slate"] .md-typeset table:not([class]) {
-  border-radius: 0.75rem;
-  overflow: hidden;
-  border: 1px solid rgba(69, 70, 76, 0.1);
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) thead {
@@ -914,40 +1004,24 @@ article:has(.ks-hero-title) > h1:first-child {
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
-  border-bottom: 1px solid rgba(69, 70, 76, 0.15);
+  border-bottom-color: rgba(69, 70, 76, 0.15);
   color: #9ca3af;
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) td {
-  border-bottom: 1px solid rgba(69, 70, 76, 0.05);
+  border-bottom-color: rgba(69, 70, 76, 0.08);
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) tr:hover {
   background: rgba(39, 42, 49, 0.4);
 }
 
-/* --- Driver Cards (rounded for Stitch) --- */
-[data-md-color-scheme="slate"] .driver-grid {
-  border: none;
-  gap: 0.75rem;
-}
-
 [data-md-color-scheme="slate"] .driver-card {
-  border: 1px solid rgba(69, 70, 76, 0.1);
-  border-radius: 1rem;
   background: #1c2026;
-  transition: all 0.2s;
 }
 
 [data-md-color-scheme="slate"] .driver-card:hover {
   border-color: rgba(173, 198, 255, 0.2);
-  background: rgba(28, 32, 38, 0.7);
-}
-
-/* --- Badge styling (rounded pills) --- */
-[data-md-color-scheme="slate"] .badge {
-  border-radius: 9999px;
-  padding: 0.1rem 0.5rem;
 }
 
 /* --- Pipeline Diagram: Per-Stage Colors --- */
@@ -979,12 +1053,6 @@ article:has(.ks-hero-title) > h1:first-child {
 .ks-figure svg a[href*="tooling"] .ks-box {
   stroke: var(--ks-c-tooling);
   fill: color-mix(in srgb, var(--ks-c-tooling) 6%, transparent);
-}
-
-/* Homepage pipeline arrows stay neutral for multi-color diagram */
-[data-ks-section="home"] .ks-figure svg .ks-line,
-[data-ks-section="home"] .ks-figure svg .ks-arrow {
-  stroke: var(--ks-fg-light);
 }
 
 /* Driver card hover uses section color */
@@ -1028,14 +1096,3 @@ article:has(.ks-hero-title) > h1:first-child {
 }
 .ks-pagedate[data-stale="true"]{color:#d29922;}
 .ks-pagedate:empty{display:none;}
-
-/* Model breadcrumb. Names which half of the site you are in, and marks the
-   primitive as the hinge between them rather than as one more stage. */
-.ks-pipeline-pos .ks-half{
-  font-weight:700;color:var(--md-default-fg-color);
-  padding-right:.35rem;border-right:1px solid var(--md-default-fg-color--lighter);
-  margin-right:.45rem;
-}
-.ks-pipeline-pos .ks-hinge{color:var(--ks-cobalt-light);font-style:italic;}
-.ks-pipeline-pos a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor;}
-.ks-pipeline-pos a:hover{color:var(--ks-cobalt-light);}

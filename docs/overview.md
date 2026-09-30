@@ -1,37 +1,24 @@
 ---
 hide:
   - toc
-description: "What kernel access buys you on Windows: how it is obtained across 157 CVEs and 64 drivers, and which kernel-layer and user-layer defenses it does and does not defeat."
+description: "The map: KernelSight answers one question, what a kernel read/write primitive buys an attacker on a given Windows build and CPU, and which defenses still stop them. Two halves, one hinge."
 ---
 
-<div class="ks-hero-title" markdown>KernelSight</div>
+<div class="ks-hero-title" markdown>One question</div>
 
 <p class="ks-hero-subtitle">
-What kernel access buys you on Windows. One half of this site covers how the access is obtained, across 157 real CVEs and 64 drivers. The other covers what that access defeats, at both kernel and user level. A read or write primitive is the hinge between them.
+What does a kernel read or write primitive buy an attacker on a <em>specific</em> Windows build and
+CPU, and which defenses still stop them? Every page on this site answers one half of that question
+or the other. The halves are called <strong>Getting in</strong> and <strong>What stops them</strong>,
+and the hinge between them is the primitive itself.
 </p>
-
-## Recent Updates
-
-| Date | What's New |
-|------|------------|
-| **2026-09-04** | Every page now shows when it last changed, measured from git rather than asserted. Corpus totals are generated from the data and guarded by a test, after three different figures were live at once. |
-| **2026-09-03** | Repositioned around what kernel access buys you. Navigation regrouped into [Means](driver-types/index.md) and [Targets](mitigations/index.md); new [bypass matrix](bypasses/index.md) evaluating every inventory against one platform selection; first user-layer defense page, [Protected Process Light](mitigations/protected-process.md). Every technique now carries a dated verdict and a basis tier. |
-| **2026-03-12** | [KDU Provider Compatibility](reference/kdu-compatibility.md) and [LOLDrivers Deep Analysis](reference/loldrivers-analysis.md) updated with full 1,775-driver Tier 2 Ghidra results. 1,404 KDU-compatible (79%), 354 Tier 2 confirmed, 122 confirmed MapDriver candidates with physical + virtual memory primitives reachable from IOCTL handlers. All mitigations, ROP gadgets, and I/O methods scored. |
-| **2026-03-01** | Backfill: 13 case studies added for 2022--2024 CVEs with published exploit research. CLFS ransomware chain (CVE-2022-24521, CVE-2022-35803, CVE-2023-23376), Project Zero registry audit (CVE-2022-34707, CVE-2023-23420), DEVCORE kernel streaming (CVE-2024-30090, CVE-2024-30084, CVE-2024-38144), activation context bugs (CVE-2022-22047, CVE-2022-41073). Corpus now at 157 CVEs, 58 exploited ITW. |
-| **2026-03-01** | New guide: [Why Kernel Drivers?](guides/why-kernel-drivers.md) -- what hardware enforces, what only Ring 0 can do, user-mode alternatives, the security cost, and Microsoft's trajectory toward constraining kernel code. |
-| **2026-02-28** | New guides: [Corpus Analytics](guides/corpus-analytics.md), [Exploit Chain Patterns](guides/exploit-chain-patterns.md), [Patch Patterns](guides/patch-patterns.md), [Mitigation Timeline](guides/mitigation-timeline.md), [Anatomy of a Secure Driver](guides/secure-driver-anatomy.md). New deep dives: [afd.sys](case-studies/afd-deep-dive.md), [win32k](case-studies/win32k-deep-dive.md), [ntfs.sys](case-studies/ntfs-deep-dive.md). |
-| **2026-02-28** | 58 new case studies added across afd.sys, clfs.sys, win32k, dwmcore.dll, ntfs.sys, ntoskrnl, plus new drivers: rasman.sys, storvsp.sys, dxgkrnl.sys, msfs.sys. BYOVD additions include Paragon BioNTdrv siblings, TfSysMon.sys, STProcessMonitor.sys. |
-| **2026-02-28** | 25 new case studies for 2025-2026 kernel CVEs -- ITW zero-days in [afd.sys](case-studies/CVE-2025-21418.md), [clfs.sys](case-studies/CVE-2025-32701.md), [DWM](case-studies/CVE-2025-30400.md), [ntoskrnl](case-studies/CVE-2025-62215.md), [win32k](case-studies/CVE-2025-24983.md), [Hyper-V](case-studies/CVE-2025-21334.md); BYOVD via [Paragon](case-studies/CVE-2025-0289.md), [NSecKrnl](case-studies/CVE-2025-68947.md), [EnPortv](case-studies/EnPortv-sys.md). |
-| **2026-02-28** | [CVE-2025-3464](case-studies/CVE-2025-3464.md) / [CVE-2025-1533](case-studies/CVE-2025-1533.md) -- AsIO3.sys auth bypass + stack overflow via [decrement-by-one](primitives/arw/arb-increment-decrement.md), [PreviousMode flip](primitives/exploitation/previous-mode-manipulation.md), [token theft](primitives/exploitation/token-swapping.md). |
-| **2026-02-25** | [CVE-2026-21241](case-studies/CVE-2026-21241.md) -- afd.sys notification UAF with [bit-manipulation primitive](primitives/exploitation/bit-manipulation.md), DACL corruption, token privilege escalation. |
-| **2026-02-25** | New technique: [Bit-Manipulation Primitives](primitives/exploitation/bit-manipulation.md). Expanded: [ACL / SD Manipulation](primitives/exploitation/acl-sd-manipulation.md), [KASLR Bypasses](mitigations/kaslr-bypasses.md). |
 
 <div class="ks-figure" markdown>
   <span class="ks-figure-label">FIG_001: The two halves, and the hinge</span>
   <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Means feeds a kernel read, write or execute primitive, which then feeds Targets. Means covers driver types, attack surfaces, vulnerability classes and case studies. Targets covers kernel-layer and user-layer defenses.">
 
     <!-- MEANS -->
-    <text class="ks-label" x="30" y="34">MEANS &#183; HOW THE ACCESS IS OBTAINED</text>
+    <text class="ks-label" x="30" y="34">GETTING IN &#183; HOW THE ACCESS IS OBTAINED</text>
     <rect class="ks-box" x="30" y="48" width="300" height="34"/>
     <text class="ks-annotation" x="45" y="69">Driver types &#183; 12 families</text>
     <rect class="ks-box" x="30" y="92" width="300" height="34"/>
@@ -59,7 +46,7 @@ What kernel access buys you on Windows. One half of this site covers how the acc
     <path class="ks-arrow" d="M560 145 L570 150 L560 155 Z" fill="currentColor"/>
 
     <!-- TARGETS -->
-    <text class="ks-label" x="570" y="34">TARGETS &#183; WHAT IT DEFEATS</text>
+    <text class="ks-label" x="570" y="34">WHAT STOPS THEM &#183; WHAT IT DEFEATS</text>
     <rect class="ks-box" x="570" y="92" width="300" height="52"/>
     <text class="ks-annotation" x="585" y="112">Kernel layer &#183; 19 defenses</text>
     <text class="ks-annotation" x="585" y="130">DSE, HVCI, kCET, KDP, HLAT, KASLR</text>
@@ -76,9 +63,10 @@ What kernel access buys you on Windows. One half of this site covers how the acc
   </svg>
 </div>
 
-<hr class="ks-divider">
+## Getting in: the means
 
-## The two halves
+How a standard-user foothold becomes a kernel read/write primitive. Read in order, each stage
+narrows from landscape to capability.
 
 <ol class="ks-pipeline-list" markdown>
 <li markdown>
@@ -95,65 +83,82 @@ What kernel access buys you on Windows. One half of this site covers how the acc
 </li>
 <li markdown>
 <strong><a href="primitives/">Primitives</a></strong>
-<p>Convert the bug into a capability: arbitrary read/write, pool spray, token swap. 21 techniques split between arb R/W primitives and exploitation building blocks.</p>
+<p>Convert the bug into a capability: arbitrary read/write, pool spray, token swap. 21 technique pages split between arb R/W primitives and exploitation building blocks.</p>
 </li>
 <li markdown>
 <strong><a href="case-studies/">Case Studies</a></strong>
-<p>Walk through the full chain for 157 real CVEs, covering root cause, exploitation path, patch analysis and detection rules. 58 exploited in the wild, including 38 third-party BYOVD drivers.</p>
-</li>
-<li markdown>
-<strong><a href="mitigations/">Mitigations</a></strong>
-<p>Understand the defenses, from SMEP and SMAP through kCFG, kCET, VBS, HVCI and pool hardening, and which primitives each one blocks. Sits on the Targets side.</p>
-</li>
-<li markdown>
-<strong><a href="tooling/">Tooling</a></strong>
-<p>Static analysis, fuzzing, kernel debugging, and AutoPiff integration for automated vulnerability detection across driver patches.</p>
-</li>
-<li markdown>
-<strong><a href="guides/">Guides</a></strong>
-<p>Cross-cutting analysis that synthesizes patterns from the corpus -- what makes a driver secure, what the common mistakes look like, and how to avoid them.</p>
+<p>Walk the full chain for 157 real CVEs: root cause, exploitation path, patch analysis, detection rules. 58 exploited in the wild. The <a href="notable-exploits/">Notable Exploits</a> profiles regroup these by developer and chain rather than by bug.</p>
 </li>
 </ol>
 
+## What stops them: the targets
+
+The other half starts where the primitive exists. For every defense on the [roster](mitigations/),
+a maintained inventory of what a kernel primitive does and does not defeat against it.
+
+<ol class="ks-pipeline-list" markdown>
+<li markdown>
+<strong><a href="mitigations/">The defense roster</a></strong>
+<p>30 defenses, split by the layer of the asset protected: 19 kernel layer, 11 user layer. 13 have a reviewed bypass inventory today; the rest are tracked as planned, so coverage is a number that moves rather than a claim.</p>
+</li>
+<li markdown>
+<strong><a href="bypasses/">The bypass matrix</a></strong>
+<p>Every registered inventory re-evaluated against one platform selector: same Windows version, same HVCI checkbox, different silicon, different answers. Each verdict carries <code>layer</code>, <code>asOf</code> and a basis tier: tested, cited, or inferred.</p>
+</li>
+</ol>
+
+## How to read the two page types
+
+**A case study** runs bug, then capability, then what the capability is worth: the root cause with
+build numbers, the primitive it converts into, the defenses it walked past, the patch, and
+detection. Start with [CVE-2024-21338](case-studies/CVE-2024-21338.md), the cleanest example in the
+corpus.
+
+**A bypass verdict** is never a bare yes or no. It is dated, it names its basis, and it is tied to
+a build and a CPU feature set. An `inferred` verdict is a research lead, not a finding. The whole
+inventory is also published as machine-readable data,
+[JSON](assets/bypasses.json) regenerated on every deploy.
+
 <hr class="ks-divider--dots">
 
-## Corpus
+## The corpus
 
 <div class="ks-stats-box" markdown>
-<span class="ks-stat-num">156</span> CVE case studies &nbsp;&middot;&nbsp;
+<span class="ks-stat-num">157</span> CVE case studies &nbsp;&middot;&nbsp;
 <span class="ks-stat-num">64</span> unique drivers &nbsp;&middot;&nbsp;
-<span class="ks-stat-num">57</span> exploited in the wild &nbsp;&middot;&nbsp;
+<span class="ks-stat-num">58</span> exploited in the wild &nbsp;&middot;&nbsp;
 <span class="ks-stat-num">2</span> remotely exploitable<br>
 <span class="ks-stat-num">12</span> driver type categories &nbsp;&middot;&nbsp;
-<span class="ks-stat-num">57</span> technique pages &nbsp;&middot;&nbsp;
-<span class="ks-stat-num">80+</span> AutoPiff detection rules<br>
+<span class="ks-stat-num">21</span> technique pages &nbsp;&middot;&nbsp;
+<span class="ks-stat-num">30</span> defenses on the roster &nbsp;&middot;&nbsp;
+<span class="ks-stat-num">49</span> dated bypass verdicts<br>
 <span class="ks-stat-num">1,775</span> LOLDrivers analyzed &nbsp;&middot;&nbsp;
 <span class="ks-stat-num">354</span> Tier 2 Ghidra confirmed &nbsp;&middot;&nbsp;
-<span class="ks-stat-num">122</span> confirmed MapDriver candidates
+<span class="ks-stat-num">80+</span> AutoPiff detection rules
 </div>
 
-## Recommended Paths
+## Where to go next
 
 <div class="ks-paths" markdown>
 
-<a class="ks-path-card" href="../">
-  <strong>Explore the corpus</strong>
-  <span>Interactive dashboard. Search, filter, and visualize all 157 CVEs. Heat matrix shows where the bugs cluster.</span>
+<a class="ks-path-card" href="start-here/">
+  <strong>New here</strong>
+  <span>The 7-stage reading path. Each stage ends with a check question, so you can tell whether to move on or reread.</span>
 </a>
 
-<a class="ks-path-card" href="driver-types/">
-  <strong>New to kernel exploitation</strong>
-  <span>Start with Driver Types to understand the landscape, then start in Means and follow it to a primitive.</span>
+<a class="ks-path-card" href="../">
+  <strong>Explore the corpus</strong>
+  <span>Interactive dashboard. Search, filter and visualize all 157 CVEs. The heat matrix shows where the bugs cluster.</span>
 </a>
 
 <a class="ks-path-card" href="case-studies/">
   <strong>Researching a specific driver</strong>
-  <span>Jump to Case Studies and filter by driver name. Each CVE links back to the relevant Means pages.</span>
+  <span>Case studies grouped by driver family, from CLFS through afd.sys to the BYOVD catalogue.</span>
 </a>
 
-<a class="ks-path-card" href="tooling/autopiff-integration/">
-  <strong>Building detection automation</strong>
-  <span>See how AutoPiff integrates with this knowledge base to detect vulnerability patterns at scale.</span>
+<a class="ks-path-card" href="bypasses/">
+  <strong>Defending endpoints</strong>
+  <span>The bypass matrix answers which controls still bite, per build and per CPU, once an attacker holds a primitive.</span>
 </a>
 
 <a class="ks-path-card" href="guides/secure-driver-anatomy/">
@@ -163,6 +168,19 @@ What kernel access buys you on Windows. One half of this site covers how the acc
 
 </div>
 
-## Data & Analysis
+## Reference
 
-The two halves above cover *how* kernel drivers get exploited. For a data-driven view of *which* drivers are most dangerous, see the [Reference](reference/) section, where 1,775 LOLDrivers are analyzed with automated Ghidra decompilation, scored for weaponisability, and mapped to KDU provider compatibility.
+[Tooling](tooling/) for the workflow (static analysis, fuzzing, debugging, patch diffing, AutoPiff),
+the [driver library](reference/) for BYOVD, LOLDrivers deep analysis and KDU compatibility, and
+[guides](guides/) for cross-cutting synthesis.
+
+## Recent Updates
+
+| Date | What's New |
+|------|------------|
+| **2026-09-30** | Site-wide redesign around the one-question model: a spine bar on every page names which half you are in, the palette toggle is back, and color in the UI now means status rather than section. Notable Exploits section ships Nightmare-Eclipse and Lazarus/FudModule profiles. The bypass registry is published as machine-readable JSON. |
+| **2026-09-04** | Every page now shows when it last changed, measured from git rather than asserted. Corpus totals are generated from the data and guarded by a test, after three different figures were live at once. |
+| **2026-09-03** | Repositioned around what kernel access buys you. Navigation regrouped into [Getting in](driver-types/index.md) and [What stops them](mitigations/index.md); new [bypass matrix](bypasses/index.md) evaluating every inventory against one platform selection; first user-layer defense page, [Protected Process Light](mitigations/protected-process.md). Every technique now carries a dated verdict and a basis tier. |
+| **2026-03-12** | [KDU Provider Compatibility](reference/kdu-compatibility.md) and [LOLDrivers Deep Analysis](reference/loldrivers-analysis.md) updated with full 1,775-driver Tier 2 Ghidra results. 1,404 KDU-compatible (79%), 354 Tier 2 confirmed, 122 confirmed MapDriver candidates with physical + virtual memory primitives reachable from IOCTL handlers. All mitigations, ROP gadgets, and I/O methods scored. |
+| **2026-03-01** | Backfill: 13 case studies added for 2022--2024 CVEs with published exploit research. CLFS ransomware chain (CVE-2022-24521, CVE-2022-35803, CVE-2023-23376), Project Zero registry audit (CVE-2022-34707, CVE-2023-23420), DEVCORE kernel streaming (CVE-2024-30090, CVE-2024-30084, CVE-2024-38144), activation context bugs (CVE-2022-22047, CVE-2022-41073). Corpus now at 157 CVEs, 58 exploited ITW. |
+| **2026-02-28** | 58 new case studies across afd.sys, clfs.sys, win32k, dwmcore.dll, ntfs.sys, ntoskrnl, plus new deep dives: [afd.sys](case-studies/afd-deep-dive.md), [win32k](case-studies/win32k-deep-dive.md), [ntfs.sys](case-studies/ntfs-deep-dive.md), and new guides: [Corpus Analytics](guides/corpus-analytics.md), [Exploit Chain Patterns](guides/exploit-chain-patterns.md), [Patch Patterns](guides/patch-patterns.md), [Mitigation Timeline](guides/mitigation-timeline.md). |

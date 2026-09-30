@@ -4,10 +4,6 @@ description: "App Control for Business, formerly WDAC: kernel-enforced applicati
 
 # App Control for Business
 
-<div class="ks-pipeline-pos">
-  <a href="../driver-types/">Getting in</a> &rarr; <span class="ks-hinge">kernel access</span> &rarr; <span class="ks-half">What stops them</span> <span class="ks-active">User layer</span>
-</div>
-
 App Control for Business, known as Windows Defender Application Control until Microsoft renamed
 it, decides which code may execute according to a policy an organisation writes. It is enforced
 by the same kernel Code Integrity engine as [Smart App Control](smart-app-control.md), and it

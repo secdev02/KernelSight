@@ -1,9 +1,5 @@
 # Vendor Utility Drivers
 
-<div class="ks-pipeline-pos">
-  <span class="ks-half">Getting in</span> <span class="ks-active">Driver Type</span> &rarr; Attack Surface &rarr; Vuln Class &rarr; Primitive &rarr; Case Study &rarr; <span class="ks-hinge">kernel access</span> &rarr; <a href="../bypasses/">What stops them</a>
-</div>
-
 Dell ships a BIOS update utility. It includes a kernel driver called DBUtil_2_3.sys. That driver exposes five IOCTLs that provide arbitrary kernel memory read and write. It is signed by Dell's legitimate code signing certificate. Microsoft's driver signature enforcement trusts it completely. And any user on the system can open a handle to its device object and read or write any byte in kernel memory.
 
 This is the BYOVD (Bring Your Own Vulnerable Driver) problem in its purest form. Vendor utility drivers are not buggy in the traditional sense; their "vulnerability" is their design. They were built to give hardware management utilities direct access to physical memory, Model-Specific Registers (MSRs), I/O ports, and PCI configuration space. The developers never expected an adversary to load the driver independently and use these capabilities for exploitation. But that is exactly what ransomware groups, APT actors, and red teams do, and it has been happening at scale since at least 2018.
