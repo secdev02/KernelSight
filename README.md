@@ -1,9 +1,9 @@
 # KernelSight
 
 [![GitHub Pages](https://img.shields.io/badge/Browse-Knowledge%20Base-blue)](https://splintersfury.github.io/KernelSight/)
-[![CVEs](https://img.shields.io/badge/CVEs-156-red)](https://splintersfury.github.io/KernelSight/case-studies/)
+[![CVEs](https://img.shields.io/badge/CVEs-157-red)](https://splintersfury.github.io/KernelSight/case-studies/)
 [![Drivers](https://img.shields.io/badge/Drivers-64-orange)](https://splintersfury.github.io/KernelSight/driver-types/)
-[![ITW](https://img.shields.io/badge/Exploited%20ITW-57-critical)](https://splintersfury.github.io/KernelSight/guides/corpus-analytics/)
+[![ITW](https://img.shields.io/badge/Exploited%20ITW-58-critical)](https://splintersfury.github.io/KernelSight/guides/corpus-analytics/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 The exploitation pipeline for Windows kernel drivers, from attack surface to privilege escalation. Every entry is grounded in real CVEs with driver names, vulnerable/fixed builds, patch analysis, and detection rules.
@@ -14,17 +14,17 @@ The exploitation pipeline for Windows kernel drivers, from attack surface to pri
 
 ## What is KernelSight?
 
-KernelSight is an interactive knowledge base that maps how Windows kernel drivers get exploited. It tracks 156 CVEs across 64 drivers, organized as a pipeline that mirrors how exploitation actually works: identify a driver, find its attack surface, classify the bug, convert it into a primitive, and escalate to SYSTEM.
+KernelSight is an interactive knowledge base that maps how Windows kernel drivers get exploited. It tracks 157 CVEs across 64 drivers, organized as a pipeline that mirrors how exploitation actually works: identify a driver, find its attack surface, classify the bug, convert it into a primitive, and escalate to SYSTEM.
 
-The landing page is an interactive threat intelligence dashboard with a driver-by-vuln-class heat matrix, searchable CVE explorer, and export functionality. The knowledge base behind it contains 241 pages of narrative-driven technical content covering vulnerability classes, exploitation primitives, kernel mitigations, and real-world case studies.
+The landing page is an interactive threat intelligence dashboard with a driver-by-vuln-class heat matrix, searchable CVE explorer, and export functionality. The knowledge base behind it contains 258 pages of narrative-driven technical content covering vulnerability classes, exploitation primitives, kernel mitigations, and real-world case studies.
 
 ## Corpus
 
 | Metric | Count |
 |--------|-------|
-| CVE case studies | **156** |
+| CVE case studies | **157** |
 | Unique drivers analysed | **64** |
-| Exploited in the wild | **57** |
+| Exploited in the wild | **58** |
 | Remotely exploitable | **2** |
 | BYOVD drivers | **41** |
 | Driver type categories | **12** |
@@ -38,7 +38,7 @@ KernelSight is organized as a pipeline from driver identification through privil
 
 **[Driver Types](https://splintersfury.github.io/KernelSight/driver-types/)** → **[Attack Surfaces](https://splintersfury.github.io/KernelSight/attack-surfaces/)** → **[Vulnerability Classes](https://splintersfury.github.io/KernelSight/vuln-classes/)** → **[Exploitation Primitives](https://splintersfury.github.io/KernelSight/primitives/)** → **[Case Studies](https://splintersfury.github.io/KernelSight/case-studies/)**
 
-With **[Mitigations](https://splintersfury.github.io/KernelSight/mitigations/)** cross-cutting every stage.
+The navigation groups these five as **Means**: how kernel access is obtained. **Targets** holds the other half of the thesis: for every enumerated Windows defense, a maintained inventory of what a kernel primitive does and does not defeat against it, each verdict dated and marked tested, cited, or inferred. The **[Bypass Matrix](https://splintersfury.github.io/KernelSight/bypasses/)** re-evaluates every registered inventory against one platform selector, and **[Notable Exploits](https://splintersfury.github.io/KernelSight/notable-exploits/)** profiles exploit developers by the chains they compose rather than the bugs they find.
 
 ### Driver Types (12 Categories)
 
@@ -61,7 +61,7 @@ With **[Mitigations](https://splintersfury.github.io/KernelSight/mitigations/)**
 
 - **[Why Kernel Drivers?](https://splintersfury.github.io/KernelSight/guides/why-kernel-drivers/)** -- what hardware enforces, what only Ring 0 can do, user-mode alternatives
 - **[Anatomy of a Secure Driver](https://splintersfury.github.io/KernelSight/guides/secure-driver-anatomy/)** -- the 6 anti-patterns behind most kernel driver CVEs
-- **[Corpus Analytics](https://splintersfury.github.io/KernelSight/guides/corpus-analytics/)** -- visual breakdown of 156 CVEs by driver, year, vulnerability class
+- **[Corpus Analytics](https://splintersfury.github.io/KernelSight/guides/corpus-analytics/)** -- visual breakdown of 157 CVEs by driver, year, vulnerability class
 - **[Exploit Chain Patterns](https://splintersfury.github.io/KernelSight/guides/exploit-chain-patterns/)** -- the 5 recurring exploit chain shapes
 - **[Patch Patterns](https://splintersfury.github.io/KernelSight/guides/patch-patterns/)** -- what Microsoft's fixes look like for each bug class
 - **[Mitigation Timeline](https://splintersfury.github.io/KernelSight/guides/mitigation-timeline/)** -- when each kernel defence landed
@@ -79,7 +79,9 @@ With **[Mitigations](https://splintersfury.github.io/KernelSight/mitigations/)**
 - **[Attack Surfaces](https://splintersfury.github.io/KernelSight/attack-surfaces/)** (9) -- IOCTL handlers, filesystem IRPs, NDIS/network, ALPC, shared memory, WMI/ETW
 - **[Vulnerability Classes](https://splintersfury.github.io/KernelSight/vuln-classes/)** (10) -- buffer overflow, UAF, type confusion, TOCTOU, race conditions, integer overflow
 - **[Exploitation Primitives](https://splintersfury.github.io/KernelSight/primitives/)** (19) -- arbitrary R/W families + exploitation building blocks
-- **[Mitigations](https://splintersfury.github.io/KernelSight/mitigations/)** (9) -- SMEP/SMAP, kCFG/kCET, VBS/HVCI, KDP, pool hardening, KASLR
+- **[Bypass Matrix](https://splintersfury.github.io/KernelSight/bypasses/)** -- every registered bypass inventory evaluated against one platform selector, machine-readable export included
+- **[Mitigations / Targets](https://splintersfury.github.io/KernelSight/mitigations/)** -- 30 defenses on the roster across kernel and user layer, 13 with a reviewed bypass inventory
+- **[Notable Exploits](https://splintersfury.github.io/KernelSight/notable-exploits/)** -- exploit-developer profiles organized by chain, not by bug
 - **[BYOVD](https://splintersfury.github.io/KernelSight/reference/byovd/)** -- Bring Your Own Vulnerable Driver attack pattern
 - **[Tooling](https://splintersfury.github.io/KernelSight/tooling/)** -- static analysis, fuzzing, debugging, patch diffing, AutoPiff integration
 - **[LOLDrivers Analysis](https://splintersfury.github.io/KernelSight/reference/loldrivers-analysis/)** -- 1,775 drivers analysed with automated Ghidra decompilation
@@ -104,23 +106,26 @@ mkdocs serve                              # open http://localhost:8000
 
 ```
 KernelSight/
-├── docs/                    # MkDocs source (241 markdown pages)
+├── docs/                    # MkDocs source (258 markdown pages)
 │   ├── index.md             # Dashboard landing page (custom template)
 │   ├── overview.md          # Pipeline overview page
 │   ├── driver-types/        # 12 driver categories
 │   ├── attack-surfaces/     # 9 attack vectors
 │   ├── vuln-classes/        # 10 vulnerability classes
 │   ├── primitives/          # 19 exploitation techniques
-│   ├── case-studies/        # 161 CVE case studies + 4 deep dives
-│   ├── mitigations/         # 9 kernel defences
+│   ├── case-studies/        # 157 CVE case studies + 4 deep dives
+│   ├── notable-exploits/    # exploit-developer profiles, organized by chain
+│   ├── mitigations/         # defense pages with bypass inventories
+│   ├── bypasses/            # aggregate bypass matrix
 │   ├── guides/              # 6 synthesis essays
 │   ├── tooling/             # 5 tool guides
 │   ├── reference/           # BYOVD, LOLDrivers, KDU, resources
 │   ├── overrides/           # Custom dashboard HTML template
 │   └── assets/              # Dashboard JS, data JSON
 ├── index/                   # YAML data indices
-│   ├── cve_index.yaml       # 156 CVE definitions
+│   ├── cve_index.yaml       # 157 CVE definitions
 │   ├── driver_index.yaml    # Driver metadata
+│   ├── defenses.yaml        # Defense roster (30 entries, kernel and user layer)
 │   ├── techniques.yaml      # Technique registry
 │   └── autopiff_rule_map.yaml
 ├── collector/               # Automated CVE data collector (Docker)

@@ -16,6 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
+README = ROOT / "README.md"
 
 STATS = json.loads((DOCS / "assets" / "dashboard-data.json").read_text(encoding="utf-8"))["stats"]
 
@@ -29,10 +30,20 @@ ALL_OF = re.compile(r"\ball\s+(\d+)\s+(?:real\s+)?CVEs?\b", re.I)
 ITW_WITH_TOTAL = re.compile(
     r"\b" + str(STATS["total_cves"]) + r"\b[^.]{0,120}?\b(\d+)\s+exploited in the wild", re.I)
 
+# README-only guards. The shields.io badges and the corpus table restate the
+# same totals outside docs/, where the rglob above never looks.
+PAGES_CLAIM = re.compile(r"\b(\d+)(?:\s+markdown)?\s+pages\b", re.I)
+BADGE_CVES = re.compile(r"badge/CVEs-(\d+)-")
+BADGE_ITW = re.compile(r"ITW-(\d+)-")
+TABLE_CVES = re.compile(r"\|\s*CVE case studies\s*\|\s*\*\*(\d+)\*\*")
+TABLE_ITW = re.compile(r"\|\s*Exploited in the wild\s*\|\s*\*\*(\d+)\*\*")
+TABLE_DRIVERS = re.compile(r"\|\s*Unique drivers analysed\s*\|\s*\*\*(\d+)\*\*")
+
 
 def offences():
     bad = []
-    for md in sorted(DOCS.rglob("*.md")):
+    scanned = sorted(DOCS.rglob("*.md")) + [README]
+    for md in scanned:
         for n, line in enumerate(md.read_text(encoding="utf-8").splitlines(), 1):
             where = f"{md.relative_to(ROOT)}:{n}"
             for m in ACROSS.finditer(line):
@@ -49,8 +60,33 @@ def offences():
     return bad
 
 
+def readme_offences():
+    """README restates the totals in badges, a table and a page count.
+
+    Scoped to README.md deliberately: these patterns are too shapeless to run
+    over 258 pages of prose without crying wolf.
+    """
+    bad = []
+    text = README.read_text(encoding="utf-8")
+    actual_pages = sum(1 for _ in DOCS.rglob("*.md"))
+    for n, line in enumerate(text.splitlines(), 1):
+        where = f"README.md:{n}"
+        for pattern, expected, what in [
+            (BADGE_CVES, STATS["total_cves"], "CVEs"),
+            (BADGE_ITW, STATS["itw_count"], "exploited ITW"),
+            (TABLE_CVES, STATS["total_cves"], "CVEs"),
+            (TABLE_ITW, STATS["itw_count"], "exploited ITW"),
+            (TABLE_DRIVERS, STATS["total_drivers"], "drivers"),
+            (PAGES_CLAIM, actual_pages, "pages"),
+        ]:
+            for m in pattern.finditer(line):
+                if int(m.group(1)) != expected:
+                    bad.append(f"{where} says {m.group(1)} {what}, actual {expected}")
+    return bad
+
+
 def test_whole_corpus_totals_match_the_generated_data():
-    bad = offences()
+    bad = offences() + readme_offences()
     assert not bad, "corpus totals drifted:\n  " + "\n  ".join(bad)
 
 
