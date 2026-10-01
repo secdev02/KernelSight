@@ -38,7 +38,7 @@ KernelSight is organized as a pipeline from driver identification through privil
 
 **[Driver Types](https://splintersfury.github.io/KernelSight/driver-types/)** → **[Attack Surfaces](https://splintersfury.github.io/KernelSight/attack-surfaces/)** → **[Vulnerability Classes](https://splintersfury.github.io/KernelSight/vuln-classes/)** → **[Exploitation Primitives](https://splintersfury.github.io/KernelSight/primitives/)** → **[Case Studies](https://splintersfury.github.io/KernelSight/case-studies/)**
 
-The navigation groups these five as **Means**: how kernel access is obtained. **Targets** holds the other half of the thesis: for every enumerated Windows defense, a maintained inventory of what a kernel primitive does and does not defeat against it, each verdict dated and marked tested, cited, or inferred. The **[Bypass Matrix](https://splintersfury.github.io/KernelSight/bypasses/)** re-evaluates every registered inventory against one platform selector, and **[Notable Exploits](https://splintersfury.github.io/KernelSight/notable-exploits/)** profiles exploit developers by the chains they compose rather than the bugs they find.
+The navigation groups these five as **Means**: how kernel access is obtained. **Targets** holds the other half of the thesis: for every enumerated Windows defense, a maintained inventory of what a kernel primitive does and does not defeat against it, each verdict dated and marked tested, cited, or inferred. The **[Bypass Matrix](https://splintersfury.github.io/KernelSight/bypasses/)** re-evaluates every registered inventory against one platform selector, and **[Developer Highlights](https://splintersfury.github.io/KernelSight/notable-exploits/)** profile exploit developers by the chains they compose rather than the bugs they find.
 
 ### Driver Types (12 Categories)
 
@@ -81,7 +81,7 @@ The navigation groups these five as **Means**: how kernel access is obtained. **
 - **[Exploitation Primitives](https://splintersfury.github.io/KernelSight/primitives/)** (19) -- arbitrary R/W families + exploitation building blocks
 - **[Bypass Matrix](https://splintersfury.github.io/KernelSight/bypasses/)** -- every registered bypass inventory evaluated against one platform selector, machine-readable export included
 - **[Mitigations / Targets](https://splintersfury.github.io/KernelSight/mitigations/)** -- 30 defenses on the roster across kernel and user layer, 17 with a reviewed bypass inventory
-- **[Notable Exploits](https://splintersfury.github.io/KernelSight/notable-exploits/)** -- exploit-developer profiles organized by chain, not by bug
+- **[Developer Highlights](https://splintersfury.github.io/KernelSight/notable-exploits/)** -- exploit-developer profiles organized by chain, not by bug
 - **[BYOVD](https://splintersfury.github.io/KernelSight/reference/byovd/)** -- Bring Your Own Vulnerable Driver attack pattern
 - **[Tooling](https://splintersfury.github.io/KernelSight/tooling/)** -- static analysis, fuzzing, debugging, patch diffing, AutoPiff integration
 - **[LOLDrivers Analysis](https://splintersfury.github.io/KernelSight/reference/loldrivers-analysis/)** -- 1,775 drivers analysed with automated Ghidra decompilation

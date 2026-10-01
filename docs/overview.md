@@ -139,7 +139,7 @@ narrows from landscape to capability.
 </li>
 <li markdown>
 <strong><a href="case-studies/">Case Studies</a></strong>
-<p>Walk the full chain for 157 real CVEs: root cause, exploitation path, patch analysis, detection rules. 58 exploited in the wild. The <a href="notable-exploits/">Notable Exploits</a> profiles regroup these by developer and chain rather than by bug.</p>
+<p>Walk the full chain for 157 real CVEs: root cause, exploitation path, patch analysis, detection rules. 58 exploited in the wild. The <a href="notable-exploits/">developer highlights</a> regroup these by developer and chain rather than by bug.</p>
 </li>
 </ol>
 

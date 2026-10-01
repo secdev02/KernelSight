@@ -52,7 +52,7 @@
       <a href="{{ config.site_url }}vuln-classes/">Vulnerability classes</a>
       <a href="{{ config.site_url }}primitives/">Primitives</a>
       <a href="{{ config.site_url }}case-studies/">Case studies</a>
-      <a href="{{ config.site_url }}notable-exploits/">Notable exploits</a>
+      <a href="{{ config.site_url }}notable-exploits/">Highlights</a>
     </div>
     <div class="ks-footer__col">
       <span class="ks-footer__head">What stops them</span>
@@ -98,7 +98,7 @@
       {% for id, label in [
         ('driver-types', 'Drivers'), ('attack-surfaces', 'Surfaces'),
         ('vuln-classes', 'Bugs'), ('primitives', 'Primitives'),
-        ('case-studies', 'Cases'), ('notable-exploits', 'Exploits')] %}
+        ('case-studies', 'Cases')] %}
         {% if seg == id %}<span class="ks-spine__on">{{ label }}</span>
         {%- else %}<a href="{{ config.site_url }}{{ id }}/">{{ label }}</a>{% endif -%}
       {% endfor %}
@@ -110,6 +110,11 @@
         {% if seg == id %}<span class="ks-spine__on">{{ label }}</span>
         {%- else %}<a href="{{ config.site_url }}{{ id }}/">{{ label }}</a>{% endif -%}
       {% endfor %}
+    </div>
+    <div class="ks-spine__half">
+      <span class="ks-spine__tag">Highlights</span>
+      {% if seg == 'notable-exploits' %}<span class="ks-spine__on">Profiles</span>
+      {%- else %}<a href="{{ config.site_url }}notable-exploits/">Profiles</a>{% endif -%}
     </div>
   </nav>
   {% endif %}

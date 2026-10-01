@@ -95,7 +95,7 @@ def url_for(path):
 SECTION_LABELS = {
     "driver-types": "Drivers", "attack-surfaces": "Surfaces",
     "vuln-classes": "Bugs", "primitives": "Primitives",
-    "case-studies": "Case studies", "notable-exploits": "Exploits",
+    "case-studies": "Case studies", "notable-exploits": "Highlights",
     "mitigations": "Defenses", "bypasses": "Matrix",
     "guides": "Guides", "tooling": "Tooling", "reference": "Reference",
     "start-here": "Start here", "overview": "Overview",
