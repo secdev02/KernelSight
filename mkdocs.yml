@@ -319,6 +319,10 @@ nav:
     - Nightmare-Eclipse: notable-exploits/nightmare-eclipse.md
     - Lazarus / FudModule: notable-exploits/lazarus-fudmodule.md
     - Juan Sacco / DOG: notable-exploits/juan-sacco-dog.md
+    - Volodya / BuggiCorp: notable-exploits/volodya-buggicorp.md
+    - PlayBit / luxor2008: notable-exploits/playbit-luxor2008.md
+    - The CLFS contractor: notable-exploits/clfs-contractor.md
+    - Candiru / Sourgum: notable-exploits/candiru-sourgum.md
 
   - What stops them:
     - Bypass matrix: bypasses/index.md
