@@ -2,6 +2,7 @@
 tags:
   - kernel-layer
   - BYOVD
+description: "Driver Signature Enforcement verifies the signer, not the behavior: every BYOVD driver in the corpus passed it, and the defense that answers that is the blocklist one layer up."
 ---
 # Driver Signature Enforcement
 

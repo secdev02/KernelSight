@@ -2,6 +2,7 @@
 tags:
   - user-layer
   - VTL1
+description: "The page the rest of the site points at: the secrets live in VTL1, and a VTL0 kernel read/write primitive, however complete, has no path there. The direct read is closed."
 ---
 # Credential Guard
 

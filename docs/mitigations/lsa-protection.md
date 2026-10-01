@@ -1,6 +1,7 @@
 ---
 tags:
   - user-layer
+description: "LSA Protection is PPL applied to the one process that matters most: a wall against user-mode dumping, a speed bump against a kernel read/write primitive."
 ---
 # LSA Protection
 

@@ -102,22 +102,32 @@ SECTION_LABELS = {
 }
 
 
-def title_for(path):
-    """First markdown H1, stripped of markup. None when the page has none."""
+def meta_for(path):
+    """(title, description) from the page. Title is the first markdown H1,
+    stripped of markup; description is the frontmatter value, truncated to
+    its first sentence. Either may be None."""
     try:
         text = (DOCS / path[len("docs/"):]).read_text(encoding="utf-8")
     except OSError:
-        return None
+        return None, None
+    title, description = None, None
+    if text.startswith("---\n"):
+        end = text.find("\n---\n", 4)
+        if end != -1:
+            match = re.search(r'description:\s*["\']?(.+?)["\']?\s*\n', text[:end])
+            if match:
+                description = match.group(1).strip()
     for line in text.splitlines():
         stripped = line.strip()
         if stripped.startswith("# "):
             title = stripped[2:]
             title = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", title)
-            title = title.replace("**", "").replace("`", "").strip()
-            return title or None
-        if stripped.startswith("---") and stripped == "---":
-            continue
-    return None
+            title = title.replace("**", "").replace("`", "").strip() or None
+            break
+    if description:
+        cut = description.find(". ")
+        description = description[:cut + 1] if 0 < cut < 180 else description[:200]
+    return title, description
 
 
 def recent_feed(mapping, limit=20):
@@ -139,7 +149,7 @@ def recent_feed(mapping, limit=20):
         # the tag index is noise.
         if not url or not when or url == "tags/":
             continue
-        title = title_for(path)
+        title, description = meta_for(path)
         if not title:
             continue
         section = url.split("/")[0]
@@ -148,6 +158,7 @@ def recent_feed(mapping, limit=20):
             "title": title,
             "section": SECTION_LABELS.get(section, "Reference"),
             "date": when,
+            "description": description or "",
         })
     feed.sort(key=lambda e: (e["date"], e["url"]), reverse=True)
     return feed[:limit]

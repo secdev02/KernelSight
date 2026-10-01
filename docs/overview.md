@@ -63,6 +63,58 @@ and the hinge between them is the primitive itself.
   </svg>
 </div>
 
+
+## One real example, start to finish
+
+<div style="background:#1c2026;border:1px solid rgba(69,70,76,0.3);border-radius:1rem;padding:2rem 2.25rem 1.75rem">
+
+    <h2 style="font-family:'Space Grotesk';font-size:1.3rem;font-weight:700;color:#e0e2eb;margin:0 0 0.5rem 0;letter-spacing:-0.01em">One real example, start to finish</h2>
+    <p style="font-family:'Inter';font-size:0.86rem;color:#9ca3af;margin:0 0 2rem 0;line-height:1.7">
+      In 2024 the Lazarus Group did not bring a vulnerable driver with them. They used one that
+      was already on every Windows machine: the kernel driver behind AppLocker, a security
+      feature.
+    </p>
+
+    <div class="wx-chain" style="display:grid;grid-template-columns:150px 1fr;gap:0 1.5rem;align-items:start">
+
+      <div class="wx-step" style="font-family:'JetBrains Mono';font-size:0.62rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.1em;padding-top:0.15rem">The bug</div>
+      <div style="padding-bottom:1.5rem;border-left:1px solid rgba(69,70,76,0.4);padding-left:1.5rem;margin-left:-1.5rem;position:relative">
+        <span style="position:absolute;left:-4.5px;top:6px;width:8px;height:8px;border-radius:50%;background:#adc6ff"></span>
+        <div style="font-family:'Inter';font-size:0.88rem;color:#e0e2eb;margin-bottom:0.3rem">One control code had no permission check</div>
+        <div style="font-family:'Inter';font-size:0.8rem;color:#9ca3af;line-height:1.65">Any process could open the device and send it. The handler then trusted a pointer the caller supplied, without checking it pointed anywhere sane.</div>
+      </div>
+
+      <div class="wx-step" style="font-family:'JetBrains Mono';font-size:0.62rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.1em;padding-top:0.15rem">What it gave</div>
+      <div style="padding-bottom:1.5rem;border-left:1px solid rgba(69,70,76,0.4);padding-left:1.5rem;margin-left:-1.5rem;position:relative">
+        <span style="position:absolute;left:-4.5px;top:6px;width:8px;height:8px;border-radius:50%;background:#adc6ff"></span>
+        <div style="font-family:'Inter';font-size:0.88rem;color:#e0e2eb;margin-bottom:0.3rem">Read and write anywhere in kernel memory</div>
+        <div style="font-family:'Inter';font-size:0.8rem;color:#9ca3af;line-height:1.65">No race to win, no memory to groom, no address to leak first. Send the request, choose the address.</div>
+      </div>
+
+      <div class="wx-step" style="font-family:'JetBrains Mono';font-size:0.62rem;color:#3fb950;text-transform:uppercase;letter-spacing:0.1em;padding-top:0.15rem">What that beat</div>
+      <div style="padding-bottom:1.5rem;border-left:1px solid rgba(69,70,76,0.4);padding-left:1.5rem;margin-left:-1.5rem;position:relative">
+        <span style="position:absolute;left:-4.5px;top:6px;width:8px;height:8px;border-radius:50%;background:#3fb950"></span>
+        <div style="font-family:'Inter';font-size:0.88rem;color:#e0e2eb;margin-bottom:0.3rem">The antivirus, the credential store, the audit trail</div>
+        <div style="font-family:'Inter';font-size:0.8rem;color:#9ca3af;line-height:1.65">Each of those is guarded by a decision recorded in kernel memory. Once you can edit that memory, you are editing the decision itself rather than defeating it.</div>
+      </div>
+
+      <div class="wx-step" style="font-family:'JetBrains Mono';font-size:0.62rem;color:#d29922;text-transform:uppercase;letter-spacing:0.1em;padding-top:0.15rem">What it did not</div>
+      <div style="border-left:1px solid transparent;padding-left:1.5rem;margin-left:-1.5rem;position:relative">
+        <span style="position:absolute;left:-4.5px;top:6px;width:8px;height:8px;border-radius:50%;background:#d29922"></span>
+        <div style="font-family:'Inter';font-size:0.88rem;color:#e0e2eb;margin-bottom:0.3rem">Credential Guard, on the same machine, untouched</div>
+        <div style="font-family:'Inter';font-size:0.8rem;color:#9ca3af;line-height:1.65">Windows keeps those secrets somewhere the kernel itself cannot reach. Total control of the kernel buys nothing there.</div>
+      </div>
+
+    </div>
+
+    <p style="font-family:'Inter';font-size:0.84rem;color:#8b919b;margin:1.9rem 0 0;padding-top:1.2rem;border-top:1px solid rgba(69,70,76,0.28);line-height:1.7">
+      Bug, then capability, then what the capability is worth. That shape repeats across
+      <a href="../case-studies/" style="color:#adc6ff;text-decoration:none;border-bottom:1px solid rgba(173,198,255,0.3)">157 real cases</a>,
+      and learning to read it is what the <a href="../start-here/" style="color:#adc6ff;text-decoration:none;border-bottom:1px solid rgba(173,198,255,0.3)">path</a> teaches.
+      Read this one in full: <a href="../case-studies/CVE-2024-21338/" style="color:#adc6ff;text-decoration:none;border-bottom:1px solid rgba(173,198,255,0.3)">CVE-2024-21338</a>.
+    </p>
+  </div>
+
 ## Getting in: the means
 
 How a standard-user foothold becomes a kernel read/write primitive. Read in order, each stage
@@ -106,6 +158,75 @@ a maintained inventory of what a kernel primitive does and does not defeat again
 <p>Every registered inventory re-evaluated against one platform selector: same Windows version, same HVCI checkbox, different silicon, different answers. Each verdict carries <code>layer</code>, <code>asOf</code> and a basis tier: tested, cited, or inferred.</p>
 </li>
 </ol>
+
+
+## What still works, as the platform hardens
+
+<div style="background:#1c2026;border:1px solid rgba(69,70,76,0.28);border-radius:1rem;padding:1.6rem 1.75rem 1.4rem">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem">
+      <div style="font-family:'Space Grotesk';font-size:1rem;font-weight:700;color:#e0e2eb">What still works, as the platform hardens</div>
+      <div id="curve-total" style="font-family:'JetBrains Mono';font-size:0.65rem;color:#6b7280"></div>
+    </div>
+    <div id="curve-rows" style="display:flex;flex-direction:column;gap:0.9rem;margin-top:1.3rem"></div>
+    <p id="curve-note" style="font-family:'Inter';font-size:0.75rem;color:#8b919b;line-height:1.6;margin:1.1rem 0 0;padding-top:0.95rem;border-top:1px solid rgba(69,70,76,0.25)"></p>
+  </div>
+  <div id="coverage-line" style="display:flex;flex-wrap:wrap;gap:2rem;align-items:baseline;margin-top:1rem;padding:1rem 1.25rem;background:#1c2026;border:1px solid rgba(69,70,76,0.22);border-radius:0.625rem"></div>
+
+
+<script>
+(function () {
+  var rows = document.getElementById('curve-rows');
+  if (!rows) return;
+  fetch('../assets/hero-curve.json').then(function (r) { return r.json(); }).then(function (d) {
+    var total = d.techniques;
+    document.getElementById('curve-total').textContent = total + ' techniques, re-evaluated per configuration';
+    var flat = d.configs.filter(function (c, i, a) { return i > 0 && c.open === a[i - 1].open; }).length;
+    rows.innerHTML = d.configs.map(function (c) {
+      function w(n) { return (n / total * 100).toFixed(1) + '%'; }
+      return '<div>'
+        + '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.35rem">'
+        + '<span style="font-family:\'JetBrains Mono\';font-size:0.68rem;color:#c3c8d2">' + c.label + '</span>'
+        + '<span style="font-family:\'Space Grotesk\';font-size:0.9rem;font-weight:700;color:#3fb950">' + c.open + ' open</span>'
+        + '</div>'
+        + '<div style="display:flex;overflow:hidden;border-radius:3px;height:22px">'
+        + '<div style="width:' + w(c.open) + ';background:#3fb950" title="open: ' + c.open + '"></div>'
+        + '<div style="width:' + w(c.gated) + ';background:#d29922" title="gated: ' + c.gated + '"></div>'
+        + '<div style="width:' + w(c.closed) + ';background:#3a4150" title="closed: ' + c.closed + '"></div>'
+        + '</div></div>';
+    }).join('');
+    document.getElementById('curve-note').textContent = flat
+      ? 'The flat tail is a gap in this reference, not in Windows: no inventory here models HLAT yet. Closing that is the next increment.'
+      : 'Same Windows version, different silicon, different answers.';
+    var r = d.roster;
+    document.getElementById('coverage-line').innerHTML = [
+      [r.total, 'defenses in the roster'],
+      [r.with_inventory, 'have a reviewed inventory'],
+      [total, 'techniques carry a dated verdict']
+    ].map(function (p) {
+      return '<div><span style="font-family:\'Space Grotesk\';font-size:1.3rem;font-weight:700;color:#e0e2eb">' + p[0]
+           + '</span> <span style="font-family:\'Inter\';font-size:0.8rem;color:#9ca3af\'">' + p[1] + '</span></div>';
+    }).join('');
+  }).catch(function () {
+    rows.innerHTML = '<div style="font-family:\'Inter\';font-size:0.8rem;color:#9ca3af">Curve unavailable.</div>';
+  });
+})();
+</script>
+
+<!-- Footer -->
+<footer style="border-top:1px solid rgba(69,70,76,0.15);padding:3rem 1.5rem;background:#10131a;margin-top:3rem">
+  <div style="max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <span style="font-family:'Space Grotesk';font-weight:700;color:#adc6ff;font-size:1.25rem;display:block;margin-bottom:0.5rem">KernelSight</span>
+      <span style="font-family:'JetBrains Mono';font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af">&copy; 2026 KernelSight</span>
+    </div>
+    <div style="display:flex;gap:2rem">
+      <a href="https://github.com/splintersfury/KernelSight" style="font-family:'JetBrains Mono';font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af;text-decoration:none">GitHub</a>
+      <a href="{{ config.site_url }}about/" style="font-family:'JetBrains Mono';font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af;text-decoration:none">About</a>
+    </div>
+  </div>
+</footer>
+{% end
+</script>
 
 ## How to read the two page types
 

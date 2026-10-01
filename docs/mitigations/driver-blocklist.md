@@ -2,6 +2,7 @@
 tags:
   - kernel-layer
   - BYOVD
+description: "The vulnerable driver blocklist answers what DSE cannot, and its two structural openings are list lag and the beyond-BYOVD case where the driver ships with Windows."
 ---
 # Vulnerable Driver Blocklist
 
