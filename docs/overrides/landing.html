@@ -38,11 +38,11 @@
 }
 
 .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+/* The landing page has its own header and footer; Material's footer is not
+   used here. Material's header is rendered slim and collapsed via
+   .ks-material-header in extra.css, which keeps its JS, palette and search
+   modal alive without visible chrome. */
 .md-tabs, .md-sidebar, .md-footer, .md-header__inner, .md-header-nav { display: none !important; }
-/* Material's header must exist for its JS, and its search modal must paint.
-   Collapse the header but keep the modal reachable, exactly like main.html. */
-.md-header { position: absolute; top: 0; left: 0; width: 100%; height: 0; visibility: hidden; pointer-events: none; }
-.md-header .md-search { visibility: visible; pointer-events: auto; }
 .md-main__inner { margin: 0 !important; padding: 0 !important; max-width: none !important; }
 .md-content { margin: 0 !important; padding: 0 !important; max-width: none !important; }
 .md-content__inner { margin: 0 !important; padding: 0 !important; max-width: none !important; }
@@ -61,7 +61,9 @@ body, html { background: #10131a !important; overflow-x: hidden; }
 </style>
 {% endblock %}
 
-{% block content %}
+{% block site_nav %}{% endblock %}
+
+{% block header %}
 <!-- Header -->
 <header style="background:rgba(16,19,26,0.92);backdrop-filter:blur(16px);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(69,70,76,0.15)">
   <div style="display:flex;align-items:center;max-width:1440px;margin:0 auto;padding:0.75rem 1.5rem;gap:1.5rem">
@@ -77,7 +79,17 @@ body, html { background: #10131a !important; overflow-x: hidden; }
     </a>
   </div>
 </header>
+<!-- Material's JS needs its header, palette form and search modal to exist;
+     rendered collapsed, nothing visible. The same treatment main.html uses. -->
+<div class="ks-material-header">
+  <header class="md-header" data-md-component="header">
+    {% include "partials/palette.html" %}
+    {% include "partials/search.html" %}
+  </header>
+</div>
+{% endblock %}
 
+{% block content %}
 <!-- Hero -->
 <section class="blueprint-grid" style="position:relative;overflow:hidden">
   <div style="position:absolute;inset:0;background:linear-gradient(to top,#10131a 0%,transparent 55%);z-index:1"></div>
