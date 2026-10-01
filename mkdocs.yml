@@ -139,6 +139,7 @@ nav:
         - Token Swapping: primitives/exploitation/token-swapping.md
         - ACL / SD Manipulation: primitives/exploitation/acl-sd-manipulation.md
         - Bit-Manipulation Primitives: primitives/exploitation/bit-manipulation.md
+        - Free Writable Area: primitives/exploitation/fwa.md
         - Primitive Matrix: primitives/exploitation/primitive-matrix.md
     - Case Studies:
       - case-studies/index.md
@@ -146,6 +147,7 @@ nav:
       - notable-exploits/index.md
       - Nightmare-Eclipse: notable-exploits/nightmare-eclipse.md
       - Lazarus / FudModule: notable-exploits/lazarus-fudmodule.md
+      - Juan Sacco / DOG: notable-exploits/juan-sacco-dog.md
       - CLFS Deep-Dive: case-studies/clfs-deep-dive.md
       - AFD Deep-Dive: case-studies/afd-deep-dive.md
       - Win32k Deep-Dive: case-studies/win32k-deep-dive.md
