@@ -7,8 +7,8 @@ description: "The map: KernelSight answers one question, what a kernel read/writ
 <div class="ks-hero-title" markdown>One question</div>
 
 <p class="ks-hero-subtitle">
-What does a kernel read or write primitive buy an attacker on a <em>specific</em> Windows build and
-CPU, and which defenses still stop them? Every page on this site answers one half of that question
+When an attacker holds a kernel read or write primitive on a <em>specific</em> Windows build and
+CPU, which defenses still hold? Every page on this site answers one half of that question
 or the other. The halves are called <strong>Getting in</strong> and <strong>What stops them</strong>,
 and the hinge between them is the primitive itself.
 </p>
@@ -301,7 +301,7 @@ the [driver library](reference/) for BYOVD, LOLDrivers deep analysis and KDU com
 |------|------------|
 | **2026-09-30** | Site-wide redesign around the one-question model: a spine bar on every page names which half you are in, the palette toggle is back, and color in the UI now means status rather than section. Notable Exploits section ships Nightmare-Eclipse and Lazarus/FudModule profiles. The bypass registry is published as machine-readable JSON. |
 | **2026-09-04** | Every page now shows when it last changed, measured from git rather than asserted. Corpus totals are generated from the data and guarded by a test, after three different figures were live at once. |
-| **2026-09-03** | Repositioned around what kernel access buys you. Navigation regrouped into [Getting in](driver-types/index.md) and [What stops them](mitigations/index.md); new [bypass matrix](bypasses/index.md) evaluating every inventory against one platform selection; first user-layer defense page, [Protected Process Light](mitigations/protected-process.md). Every technique now carries a dated verdict and a basis tier. |
+| **2026-09-03** | Repositioned around the one-question thesis. Navigation regrouped into [Getting in](driver-types/index.md) and [What stops them](mitigations/index.md); new [bypass matrix](bypasses/index.md) evaluating every inventory against one platform selection; first user-layer defense page, [Protected Process Light](mitigations/protected-process.md). Every technique now carries a dated verdict and a basis tier. |
 | **2026-03-12** | [KDU Provider Compatibility](reference/kdu-compatibility.md) and [LOLDrivers Deep Analysis](reference/loldrivers-analysis.md) updated with full 1,775-driver Tier 2 Ghidra results. 1,404 KDU-compatible (79%), 354 Tier 2 confirmed, 122 confirmed MapDriver candidates with physical + virtual memory primitives reachable from IOCTL handlers. All mitigations, ROP gadgets, and I/O methods scored. |
 | **2026-03-01** | Backfill: 13 case studies added for 2022--2024 CVEs with published exploit research. CLFS ransomware chain (CVE-2022-24521, CVE-2022-35803, CVE-2023-23376), Project Zero registry audit (CVE-2022-34707, CVE-2023-23420), DEVCORE kernel streaming (CVE-2024-30090, CVE-2024-30084, CVE-2024-38144), activation context bugs (CVE-2022-22047, CVE-2022-41073). Corpus now at 157 CVEs, 58 exploited ITW. |
 | **2026-02-28** | 58 new case studies across afd.sys, clfs.sys, win32k, dwmcore.dll, ntfs.sys, ntoskrnl, plus new deep dives: [afd.sys](case-studies/afd-deep-dive.md), [win32k](case-studies/win32k-deep-dive.md), [ntfs.sys](case-studies/ntfs-deep-dive.md), and new guides: [Corpus Analytics](guides/corpus-analytics.md), [Exploit Chain Patterns](guides/exploit-chain-patterns.md), [Patch Patterns](guides/patch-patterns.md), [Mitigation Timeline](guides/mitigation-timeline.md). |
