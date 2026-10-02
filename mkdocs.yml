@@ -323,6 +323,10 @@ nav:
     - PlayBit / luxor2008: notable-exploits/playbit-luxor2008.md
     - The CLFS contractor: notable-exploits/clfs-contractor.md
     - Candiru / Sourgum: notable-exploits/candiru-sourgum.md
+    - j00ru, the win32k decade: notable-exploits/j00ru-win32k-decade.md
+    - James Forshaw, primitives librarian: notable-exploits/james-forshaw.md
+    - The BYOVD operators: notable-exploits/ransomware-byovd-operators.md
+    - SpyBoy / Terminator: notable-exploits/spyboy-terminator.md
 
   - What stops them:
     - Bypass matrix: bypasses/index.md
