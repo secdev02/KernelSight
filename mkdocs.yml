@@ -327,6 +327,10 @@ nav:
     - James Forshaw, primitives librarian: notable-exploits/james-forshaw.md
     - The BYOVD operators: notable-exploits/ransomware-byovd-operators.md
     - SpyBoy / Terminator: notable-exploits/spyboy-terminator.md
+    - hfiref0x / KDU: notable-exploits/hfiref0x-kdu.md
+    - DEVCORE streaming sweep: notable-exploits/devcore-streaming.md
+    - Connor McGarr: notable-exploits/connor-mcgarr.md
+    - Zerodium: notable-exploits/zerodium.md
 
   - What stops them:
     - Bypass matrix: bypasses/index.md

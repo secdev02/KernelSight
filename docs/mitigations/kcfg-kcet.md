@@ -107,3 +107,9 @@ The remaining attack surface is data: tokens, process objects, security descript
 - [VBS / HVCI](vbs-hvci.md) -- complementary mitigation that enforces W^X alongside CFI
 - [CVE-2024-21338](../case-studies/CVE-2024-21338.md) -- appid.sys exploit that used a controlled kernel callback
 - [CVE-2024-30085](../case-studies/CVE-2024-30085.md) -- pool overflow exploit where kCFG forces data-only strategies
+
+## Sources
+
+Connor McGarr, "Out Of Control: How KCFG and KCET Redefine Control Flow Integrity in
+the Windows Kernel" (Black Hat USA 2025) and the kernel shadow-stack investigation that
+preceded it; see the [profile](../notable-exploits/connor-mcgarr.md).
