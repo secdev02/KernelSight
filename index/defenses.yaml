@@ -87,8 +87,8 @@ defenses:
     layer: kernel
     enforced_by: hypervisor
     protects: "Guest page-table translation integrity"
-    page: null
-    status: planned
+    page: docs/mitigations/hlat.md
+    status: current
   - id: mbec
     name: "MBEC / GMET"
     layer: kernel

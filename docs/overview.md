@@ -151,7 +151,7 @@ a maintained inventory of what a kernel primitive does and does not defeat again
 <ol class="ks-pipeline-list" markdown>
 <li markdown>
 <strong><a href="mitigations/">The defense roster</a></strong>
-<p>30 defenses, split by the layer of the asset protected: 19 kernel layer, 11 user layer. 17 have a reviewed bypass inventory today; the rest are tracked as planned, so coverage is a number that moves rather than a claim.</p>
+<p>30 defenses, split by the layer of the asset protected: 19 kernel layer, 11 user layer. 18 have a reviewed bypass inventory today; the rest are tracked as planned, so coverage is a number that moves rather than a claim.</p>
 </li>
 <li markdown>
 <strong><a href="bypasses/">The bypass matrix</a></strong>
@@ -180,7 +180,10 @@ a maintained inventory of what a kernel primitive does and does not defeat again
   fetch('../assets/hero-curve.json').then(function (r) { return r.json(); }).then(function (d) {
     var total = d.techniques;
     document.getElementById('curve-total').textContent = total + ' techniques, re-evaluated per configuration';
-    var flat = d.configs.filter(function (c, i, a) { return i > 0 && c.open === a[i - 1].open; }).length;
+    /* The gap note fires only when same-build configs ignore HLAT: the third
+       and fourth bars (24H2 older CPU vs 24H2 + HLAT). The last two bars are
+       equal by design, since the configurations are identical. */
+    var flat = d.configs.length > 3 && d.configs[2].open === d.configs[3].open;
     rows.innerHTML = d.configs.map(function (c) {
       function w(n) { return (n / total * 100).toFixed(1) + '%'; }
       return '<div>'

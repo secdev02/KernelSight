@@ -335,6 +335,7 @@ nav:
       - SMEP / SMAP: mitigations/smep-smap.md
       - kCFG / kCET: mitigations/kcfg-kcet.md
       - VBS / HVCI: mitigations/vbs-hvci.md
+      - HLAT: mitigations/hlat.md
       - KDP: mitigations/kdp.md
       - Pool Hardening: mitigations/pool-hardening.md
       - Secure Pool: mitigations/secure-pool.md

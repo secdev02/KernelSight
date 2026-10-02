@@ -16,7 +16,7 @@ The exploitation pipeline for Windows kernel drivers, from attack surface to pri
 
 KernelSight is an interactive knowledge base that maps how Windows kernel drivers get exploited. It tracks 157 CVEs across 64 drivers, organized as a pipeline that mirrors how exploitation actually works: identify a driver, find its attack surface, classify the bug, convert it into a primitive, and escalate to SYSTEM.
 
-The landing page is an interactive threat intelligence dashboard with a driver-by-vuln-class heat matrix, searchable CVE explorer, and export functionality. The knowledge base behind it contains 273 pages of narrative-driven technical content covering vulnerability classes, exploitation primitives, kernel mitigations, and real-world case studies.
+The landing page is an interactive threat intelligence dashboard with a driver-by-vuln-class heat matrix, searchable CVE explorer, and export functionality. The knowledge base behind it contains 274 pages of narrative-driven technical content covering vulnerability classes, exploitation primitives, kernel mitigations, and real-world case studies.
 
 ## Corpus
 
@@ -80,7 +80,7 @@ The navigation groups these five as **Means**: how kernel access is obtained. **
 - **[Vulnerability Classes](https://splintersfury.github.io/KernelSight/vuln-classes/)** (10) -- buffer overflow, UAF, type confusion, TOCTOU, race conditions, integer overflow
 - **[Exploitation Primitives](https://splintersfury.github.io/KernelSight/primitives/)** (19) -- arbitrary R/W families + exploitation building blocks
 - **[Bypass Matrix](https://splintersfury.github.io/KernelSight/bypasses/)** -- every registered bypass inventory evaluated against one platform selector, machine-readable export included
-- **[Mitigations / Targets](https://splintersfury.github.io/KernelSight/mitigations/)** -- 30 defenses on the roster across kernel and user layer, 17 with a reviewed bypass inventory
+- **[Mitigations / Targets](https://splintersfury.github.io/KernelSight/mitigations/)** -- 30 defenses on the roster across kernel and user layer, 18 with a reviewed bypass inventory
 - **[Developer Highlights](https://splintersfury.github.io/KernelSight/notable-exploits/)** -- exploit-developer profiles organized by chain, not by bug
 - **[BYOVD](https://splintersfury.github.io/KernelSight/reference/byovd/)** -- Bring Your Own Vulnerable Driver attack pattern
 - **[Tooling](https://splintersfury.github.io/KernelSight/tooling/)** -- static analysis, fuzzing, debugging, patch diffing, AutoPiff integration
@@ -110,7 +110,7 @@ python -m pytest tests/ -q                # corpus consistency checks
 
 ```
 KernelSight/
-├── docs/                    # MkDocs source (273 markdown pages)
+├── docs/                    # MkDocs source (274 markdown pages)
 │   ├── index.md             # Dashboard landing page (custom template)
 │   ├── overview.md          # Pipeline overview page
 │   ├── driver-types/        # 12 driver categories
